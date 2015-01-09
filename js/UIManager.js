@@ -52,8 +52,9 @@ function confirmUpload()
 function createUploadDiv() 
 {
     var div = document.createElement("div");
-    var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 75;
+    var w = window
+    var l = window.innerWidth / 2 - 200;
+    var t = window.innerHeight / 2 - 75;
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divupload');
     div.innerHTML = '<p><input type="file" id="uploaddata" name="uploaddata" /></p>\

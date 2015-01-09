@@ -9,8 +9,8 @@ function createDNSLookupDiv(id)
     var host = network.getElement(id);
     var app = host.getApp("DNSClient");
     var div = document.createElement("div");
-    var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 75;
+    var l = window.innerWidth / 2 - 200;
+    var t = window.innerHeight / 2 - 75;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divdnslookup');

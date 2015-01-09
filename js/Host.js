@@ -8,8 +8,8 @@ function createNameGroupDiv(id)
 {
     var host = network.getElement(id);
     var div = document.createElement("div");
-    var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 200;
+    var l = window.innerWidth / 2 - 200;
+    var t = window.innerHeight / 2 - 200;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divnamegroup');
@@ -56,8 +56,8 @@ function createDiagnosticsDiv(id)
 {
     var host = network.getElement(id);
     var div = document.createElement("div");
-    var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 200;
+    var l = window.innerWidth / 2 - 200;
+    var t = window.innerHeight / 2 - 200;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;opacity:0.5;');
     div.setAttribute('id', 'divdiagnostics');
@@ -116,8 +116,8 @@ function createNATDiv(id)
 {
     var host = network.getElement(id);
     var div = document.createElement("div");
-    var l = document.body.clientWidth / 2 - 350;
-    var t = document.body.clientHeight / 2 - 200;
+    var l = window.innerWidth / 2 - 350;
+    var t = window.innerHeight / 2 - 200;
     
     var headers = ["Input interface","WAN Port","LAN Port","IP"];
     var data = host.getConnectable().getTrafficManager().getNATData();
@@ -182,8 +182,8 @@ function createIpDiv(id, pos)
     var connectable = host.getConnectable();
     var ipinfo = connectable.getIPInfo(pos);
     var div = document.createElement("div");
-    var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 75;
+    var l = window.innerWidth / 2 - 200;
+    var t = window.innerHeight / 2 - 75;
     
     var ip = ipinfo.getIPv4() !== null?ipinfo.getIPv4():"";
     var nm = ipinfo.getNetmask() !== null?ipinfo.getNetmask():"255.255.255.0";

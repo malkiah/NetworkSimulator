@@ -2,8 +2,8 @@ function createGatewaysDiv(id)
 {
     var host = network.getElement(id);
     var div = document.createElement("div");
-    var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 200;
+    var l = window.innerWidth / 2 - 200;
+    var t = window.innerHeight / 2 - 200;
     
     var headers = ["Network", "Mask", "Gateway"];
     var data = host.getConnectable().getGatewayManager().getControllerData();

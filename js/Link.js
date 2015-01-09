@@ -23,8 +23,8 @@ function createLinkConnectorsDiv(id1, id2)
     var host1 = network.getElement(id1);
     var host2 = network.getElement(id2);
     var div = document.createElement("div");
-    var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 200;
+    var l = window.innerWidth / 2 - 200;
+    var t = window.innerHeight / 2 - 200;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divlinkconnectors');
