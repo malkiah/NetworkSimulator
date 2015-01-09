@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Simulator</title>
+    <script type="text/javascript" src="js/Globals.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/DHCPClient.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/DHCPServer.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/HTTPClient.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/HTTPServer.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/DNSClient.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/DNSServer.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/GatewayManager.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/TrafficManager.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/IPInfo.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/Connectable.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/Connector.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/Link.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/Drawable.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/Host.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/Message.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/Network.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/fixednetwork01.js">
+
+
+
+</script>
+    <script type="text/javascript" src="js/ImageLoader.js">
+
+
+</script>
+    <script type="text/javascript" src="js/UIClickable.js">
+
+
+</script>
+    <script type="text/javascript" src="js/UIRectangle.js">
+
+
+</script>
+    <script type="text/javascript" src="js/UILine.js">
+
+
+</script>
+    <script type="text/javascript" src="js/UIMenu.js">
+
+
+</script>
+    <script type="text/javascript" src="js/UIManager.js">
+
+
+</script>
+    <script type="text/javascript" src="js/UITable.js">
+
+
+</script>
+    <script type="text/javascript">
+
+
+
+
+function init() 
+{
+    var loader = new ImageLoader(
+    ["img/64/switch.png", 
+        "img/64/router2.png", 
+        "img/64/computer.png", 
+        "img/64/server_web.png", 
+        "img/64/server_dns.png", 
+        "img/64/server_dhcp.png", 
+        "img/64/envelope-DHCP.png", 
+        "img/64/envelope-DNS.png", 
+        "img/64/envelope-HTTP.png",
+        "img/64/envelope-ICMP.png"], 
+    fixedsimulatorprogram
+    );
+    loader.load();
+}
+</script>
+    <meta content="">
+    <style>
+
+
+
+
+html, body
+{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+table
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+fieldset
+{
+    font-size: 0.8em;
+}
+</style>
+  </head>
+  <body onload="init();" >
+    <div id="simcontainer" style="float:right;width:100%; height:1024px;">
+      <canvas id="simcanvas" />
+    </div>
+    <!--<div id="header" style="float:left; width:20%;height:15%; text-align: center;">
+      <h1>Network simulator</h1>
+    </div>
+    <div id="elemcontrols" style="float:left;width:20%;">
+      <fieldset>
+	<legend>New elements</legend>
+	<img src="img/64/computer.png" alt="New Host" title="New Host" onclick="newElement('host');" />
+	<img src="img/64/server_dhcp.png" alt="New DHCP Server" title="New DHCP Server" onclick="newElement('dhcp');" />
+	<img src="img/64/server_dns.png" alt="New DNS Server" title="New DNS Server" onclick="newElement('dns');" />
+	<img src="img/64/server_web.png" alt="New Web Server" title="New Web Server" onclick="newElement('web');" />
+	<img src="img/64/switch.png" alt="New Switch" title="New Switch" onclick="newElement('switch');" />
+	<img src="img/64/router2.png" alt="New Router" title="New Router" onclick="newElement('router');" />
+      </fieldset>
+      <fieldset>
+	<legend>Controls</legend>
+	<img src="img/64/delete.png" alt="Delete Element" title="Delete Element" onclick="deleteSelected();" style="width:32px;" />
+	<img src="img/64/link.png" alt="Create Link" title="Create Link" onclick="createLink();" style="width:32px;" />
+	<img src="img/64/save.png" alt="Save" title="Save" onclick="saveNetwork();" style="width:32px;" />
+	<img src="img/64/upload.png" alt="Upload" title="Upload" onclick="uploadClick();" style="width:32px;" />      
+	</fieldset>
+    </div>
+    <div id="simcontrols" style="float:left;width:20%;">
+      &nbsp;
+    </div>-->
+  </body>
+</html>
