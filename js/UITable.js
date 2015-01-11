@@ -1,3 +1,16 @@
+/*
+ * This file is part of the Education Network Simulator project and covered 
+ * by GPLv3 license. See full terms in the LICENSE file at the root folder
+ * or at http://www.gnu.org/licenses/gpl-3.0.html.
+ * 
+ * (c) 2015 Jorge García Ochoa de Aspuru
+ * bardok@gmail.com
+ * 
+ * Images are copyrighted by their respective authors and have been 
+ * downloaded from http://pixabay.com/
+ * 
+ */
+
 var lasttableid = 0;
 var uitables = [];
 

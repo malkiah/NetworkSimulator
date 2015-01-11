@@ -1,3 +1,16 @@
+/*
+ * This file is part of the Education Network Simulator project and covered 
+ * by GPLv3 license. See full terms in the LICENSE file at the root folder
+ * or at http://www.gnu.org/licenses/gpl-3.0.html.
+ * 
+ * (c) 2015 Jorge García Ochoa de Aspuru
+ * bardok@gmail.com
+ * 
+ * Images are copyrighted by their respective authors and have been 
+ * downloaded from http://pixabay.com/
+ * 
+ */
+
 // THANK_YOU: http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
 function sqr(x) { return x * x }
 function dist2(v, w) { return sqr(v.x - w.x) + sqr(v.y - w.y) }
