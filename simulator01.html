@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Simulator</title>
+    <script type="text/javascript" src="examples/data01.json"></script>
+    <script type="text/javascript" src="dist/networksim.min.js"></script>
+    <script type="text/javascript">
+    function init() 
+    {
+	NetworkSimulator.initialdata = exampledata;
+	var loader = new ImageLoader(
+	["img/64/switch.png", 
+	    "img/64/router2.png", 
+	    "img/64/computer.png", 
+	    "img/64/server_web.png", 
+	    "img/64/server_dns.png", 
+	    "img/64/server_dhcp.png", 
+	    "img/64/envelope-DHCP.png", 
+	    "img/64/envelope-DNS.png", 
+	    "img/64/envelope-HTTP.png",
+	    "img/64/envelope-ICMP.png"], 
+	simulator
+	);
+	loader.load();
+    }
+    </script>
+    <meta content="">
+    <style>
+    html, body
+    {
+	margin: 0;
+	padding: 0;
+	width:2048px;
+    }
+
+    table
+    {
+	border: 1px solid black;
+	border-collapse: collapse;
+	width: 100%;
+    }
+
+    td, th
+    {
+	border: 1px solid black;
+	border-collapse: collapse;
+    }
+
+    fieldset
+    {
+	font-size: 0.8em;
+    }
+    </style>
+  </head>
+  <body onload="init();" >
+    <div id="simcontainer" style="float:right;width:2048px; height:1024px;">
+      <canvas id="simcanvas" style="width:2048px; height:1024px;" />
+    </div>
+  </body>
+</html>
