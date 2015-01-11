@@ -39,3 +39,7 @@ function getNextID()
 {
   return ++lastusedid;
 }
+
+function NetworkSimulator() {
+  initialdata: null
+};

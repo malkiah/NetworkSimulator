@@ -23,7 +23,7 @@ function newElement(type)
     }
 }
 
-function fixedsimulatorprogram(imgs) 
+function simulator(imgs) 
 {
     images = imgs;
     var container = document.getElementById("simcontainer");
@@ -39,5 +39,10 @@ function fixedsimulatorprogram(imgs)
 
     network = new Network(images, ctx, W, H);
     network.init();
+    
+    if (NetworkSimulator.initialdata !== null)
+    {
+      network.load(NetworkSimulator.initialdata);
+    }
 }
 
