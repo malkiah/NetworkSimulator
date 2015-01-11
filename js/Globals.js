@@ -53,6 +53,6 @@ function getNextID()
   return ++lastusedid;
 }
 
-function NetworkSimulator() {
+var NetworkSimulator = {
   initialdata: null
 };
