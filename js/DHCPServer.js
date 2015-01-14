@@ -22,10 +22,10 @@ function createDHCPServerInfoDiv(id)
     var host = network.getElement(id);
     var app = host.getApp("DHCPServer");
     var div = document.createElement("div");
-    var l = innerWidth / 2 - 200;
+    /*var l = innerWidth / 2 - 200;
     var t = innerHeight / 2 - 75;
     
-    /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
+    div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divdhcpserverinfo');
     div.innerHTML = app.getAppController();
     div.innerHTML += '<p>\
@@ -37,7 +37,7 @@ function createDHCPServerInfoDiv(id)
     var controls = '<input type="button" id="upload" value="Save" onclick="saveDHCPServerData('+id+');" />';
     controls += '<input type="button" id="cancel" value="Cancel" onclick="cancelDHCPServerData();" />';
 
-    var window = new UIWindow('divdhcpserverinfo','divdhcpserverinfo_contents','divdhcpserverinfo_ctrls','DHCP Server',400,250,false,1.0);
+    var window = new UIWindow('divdhcpserverinfo','DHCP Server',400,250,false,1.0);
     window.setContent(app.getAppController());
     window.setControls(controls);
     window.render();
@@ -53,14 +53,14 @@ function saveDHCPServerData(id)
     var dns2 = document.getElementById('dhcpdns2').value;
     elem.getApp("DHCPServer").setData(initial, final, gateway, dns1, dns2);
 
-    removeBodyDiv('divdhcpserverinfo');
     removeBodyDiv('divbk');
+    uimanager.getWindow("divdhcpserverinfo").dispose();
 }
 
 function cancelDHCPServerData() 
 {
-    removeBodyDiv('divdhcpserverinfo');
     removeBodyDiv('divbk');
+    uimanager.getWindow("divdhcpserverinfo").dispose();
 }
 
 var DHCPServer = function(ifacepos) 

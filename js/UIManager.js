@@ -21,7 +21,7 @@ function createBkDiv()
     var div = document.createElement("div");
     var w = document.body.scrollWidth;
     var h = document.body.scrollHeight;
-    div.setAttribute('style', 'position:absolute;top:0;left:0;z-index:100;background-color:white;width:' + w + 'px;height:' + h + 'px;opacity:0.5;');
+    div.setAttribute('style', 'position:absolute;top:0;left:0;z-index:100;background-color:white;width:' + w + 'px;height:' + h + 'px;opacity:0.25;');
     div.setAttribute('id', 'divbk');
     document.body.appendChild(div);
 }
@@ -118,6 +118,7 @@ var UIManager = function()
     
     var menus = [];
     var clickables = [];
+    var windows = [];
     var canvas = document.getElementById("simcanvas");
     var state = STATE_NEUTRAL;
     var mainmenu = null;
@@ -163,6 +164,21 @@ var UIManager = function()
         _self.addClickable(rect);
     }
     
+    this.addWindow = function(w)
+    {
+        windows[w.getId()] = w;
+    };
+
+    this.getWindow = function(id)
+    {
+        return windows[id];
+    };
+
+    this.removeWindow = function(w)
+    {
+        delete windows[w.getId()];
+    };
+
     this.reset = function() 
     {
         this.clickables = [];

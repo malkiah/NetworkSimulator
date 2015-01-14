@@ -17,23 +17,25 @@ function viewWebBrowser(id)
     
     var host = network.getElement(id);
     var app = host.getApp("HTTPClient");
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 200;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;opacity:0.5;');
     div.setAttribute('id', 'divhttpclient');
-    div.innerHTML = app.getAppController();
-    div.innerHTML += '<p>\
-  <input type="button" id="close" value="Close" onclick="closeWebBrowser();" />\
-  </p>';
-    document.body.appendChild(div);
+    div.innerHTML = app.getAppController();*/
+    var controls = '<input type="button" id="close" value="Close" onclick="closeWebBrowser();" />';
+
+    var window = new UIWindow('divhttpclient','HTTP Client (Browser)',400,400,false,1.0);
+    window.setContent(app.getAppController());
+    window.setControls(controls);
+    window.render();
 }
 
 function closeWebBrowser() 
 {
-    removeBodyDiv('divhttpclient');
     removeBodyDiv('divbk');
+    uimanager.getWindow("divhttpclient").dispose();
 }
 
 function requestHTTPWebSite(id) 

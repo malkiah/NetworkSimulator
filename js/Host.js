@@ -69,11 +69,11 @@ function createDiagnosticsDiv(id)
 {
     var host = network.getElement(id);
     var div = document.createElement("div");
-    var l = window.innerWidth / 2 - 200;
+    /*var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 200;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;opacity:0.5;');
-    div.setAttribute('id', 'divdiagnostics');
+    div.setAttribute('id', 'divdiagnostics');*/
     var innerHTML = '<p>';
     innerHTML += '<select id="ifacepos">';
     for (var i = 0; i < host.getConnectable().getConnectorNumber(); i++)
@@ -90,11 +90,13 @@ function createDiagnosticsDiv(id)
     innerHTML += '<div style="width:100%;height:250px;text-align:left;font-size:0.8em;font-style:italic;" id="diagnosticsconsole" >';
     innerHTML += host.getConnectable().getTrafficManager().getDiagnosticsInfo();
     innerHTML += '</div>';
-    innerHTML += '<p>\
-  <input type="button" id="cancel" value="Exit" onclick="cancelDiagnostics();" />\
-  </p>';
-    div.innerHTML = innerHTML;
-    document.body.appendChild(div);
+    var controls = '<input type="button" id="cancel" value="Exit" onclick="cancelDiagnostics();" />';
+    /*div.innerHTML = innerHTML;
+    document.body.appendChild(div);*/
+    var window = new UIWindow('divdiagnostics','Network diagnostics',400,400,false,1.0);
+    window.setContent(innerHTML);
+    window.setControls(controls);
+    window.render();
 }
 
 function diagnosticsPing(id)
@@ -115,8 +117,8 @@ function diagnosticsTraceroute(id)
 
 function cancelDiagnostics()
 {
-    removeBodyDiv('divdiagnostics');
     removeBodyDiv('divbk');    
+    uimanager.getWindow("divdiagnostics").dispose();
 }
 
 function editNATTable(id) 

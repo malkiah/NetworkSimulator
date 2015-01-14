@@ -11,7 +11,7 @@
  * 
  */
 
-var UIWindow = function(windowid, contentid, controlsid, title, w, h, scrollable, opacity) 
+var UIWindow = function(windowid, title, w, h, scrollable, opacity) 
 {
     var STATE_MOUSE_DOWN = 0;
     var STATE_MOUSE_UP = 1;
@@ -29,8 +29,8 @@ var UIWindow = function(windowid, contentid, controlsid, title, w, h, scrollable
     var opacity = opacity;
     var scrollable = scrollable;
     var windowid = windowid;
-    var contentid = contentid;
-    var controlsid = controlsid;
+    var contentid = contentid + "_contents";
+    var controlsid = controlsid + "_controls";
     var outerdiv = null;
     var titlediv = null;
     var contentDiv = null;
@@ -40,16 +40,20 @@ var UIWindow = function(windowid, contentid, controlsid, title, w, h, scrollable
     var click_offset_y = 0;
     var move_X = 0;
     var move_Y = 0;
+
+    var _self = this;
     
     function windowMouseDownEvent(event)
     {
         var bbox = titlediv.getBoundingClientRect();
-        //var evt_x = event.clientX - bbox.left * (titlediv.width / bbox.width);
-        //var evt_y = event.clientY - bbox.top * (titlediv.height / bbox.height);
         var evt_x = event.clientX;
         var evt_y = event.clientY;
         
-        dispatchEvent(evt_x, evt_y, ACTION_MOUSE_DOWN);
+        if ((bbox.left <= evt_x) && (evt_x <= (bbox.left + bbox.width))
+            && (bbox.top <= evt_y) && (evt_y <= (bbox.top + bbox.height)))
+        {
+            dispatchEvent(evt_x, evt_y, ACTION_MOUSE_DOWN);            
+        }
     }
     
     function windowMouseUpEvent(e) 
@@ -59,9 +63,6 @@ var UIWindow = function(windowid, contentid, controlsid, title, w, h, scrollable
     
     function windowMouseMoveEvent(e)
     {
-        var bbox = titlediv.getBoundingClientRect();
-        //var evt_x = event.clientX - bbox.left * (titlediv.width / bbox.width);
-        //var evt_y = event.clientY - bbox.top * (titlediv.height / bbox.height);
         var evt_x = event.clientX;
         var evt_y = event.clientY;
         
@@ -79,8 +80,8 @@ var UIWindow = function(windowid, contentid, controlsid, title, w, h, scrollable
                         state = STATE_MOUSE_UP;
                         break;
                     case ACTION_MOUSE_MOVE:
-                        x = evt_x;
-                        y = evt_y;
+                        x = evt_x - click_offset_x + scrollX;
+                        y = evt_y - click_offset_y + scrollY;
                         outerdiv.setAttribute('style', getOuterStyle());
                         break;
                 }
@@ -89,8 +90,9 @@ var UIWindow = function(windowid, contentid, controlsid, title, w, h, scrollable
                 switch (action) 
                 {
                     case ACTION_MOUSE_DOWN:
-                        click_offset_x = evt_x;
-                        click_offset_y = evt_y;
+                        var bbox = titlediv.getBoundingClientRect();
+                        click_offset_x = evt_x - bbox.left;
+                        click_offset_y = evt_y - bbox.top;
                         state = STATE_MOUSE_DOWN;
                         break;
                 }
@@ -123,9 +125,11 @@ var UIWindow = function(windowid, contentid, controlsid, title, w, h, scrollable
         controlsDiv.setAttribute('style', 'width:100%; height:40px;')
         
         //var bkdiv = document.getElementById('divbk');
-        titlediv.addEventListener("mousedown", windowMouseDownEvent, false);
-        titlediv.addEventListener("mouseup", windowMouseUpEvent, false);
-        titlediv.addEventListener("mousemove", windowMouseMoveEvent, false);
+        window.addEventListener("mousedown", windowMouseDownEvent, true);
+        window.addEventListener("mouseup", windowMouseUpEvent, true);
+        window.addEventListener("mousemove", windowMouseMoveEvent, true);
+
+        uimanager.addWindow(_self);
     }
     
     this.render = function() 
@@ -145,6 +149,20 @@ var UIWindow = function(windowid, contentid, controlsid, title, w, h, scrollable
     this.setContent = function(content) 
     {
         contentDiv.innerHTML = content;
+    };
+
+    this.dispose = function()
+    {
+        window.removeEventListener("mousedown", windowMouseDownEvent);
+        window.removeEventListener("mouseup", windowMouseUpEvent);
+        window.removeEventListener("mousemove", windowMouseMoveEvent);
+        uimanager.removeWindow(this);
+        removeBodyDiv(windowid);
+    };
+
+    this.getId = function()
+    {
+        return windowid;
     };
     
     init();
