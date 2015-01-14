@@ -30,7 +30,18 @@ var Message = function(type, origIP, dstIP, origMAC, dstMAC, origPort, dstPort, 
     var image = img;
     var id = getNextMessageId();
     var type = type;
+    var TTL = 32;
     
+    this.decreaseTTL = function()
+    {
+        TTL--;
+    };
+
+    this.canSend = function()
+    {
+        return TTL !== 0;
+    };
+
     this.getId = function() {
         return id;
     };

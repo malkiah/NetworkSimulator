@@ -152,6 +152,7 @@ var TrafficManager = function(connectable, limitbroadcast, performNAT)
         mustsend = !forme || (connectable.compatibleBroadcastMAC(message.getDestinationMAC()) && !limitbroadcast);
         if (forme)
         {
+            message.decreaseTTL();
             if (message.getDstPort() in apptable) 
             {
                 apptable[message.getDstPort()].app.receiveMessage(message);
@@ -249,6 +250,10 @@ var TrafficManager = function(connectable, limitbroadcast, performNAT)
     {
         var forme = connectable.compatibleMAC(message.getDestinationMAC(), false);
         var myip = (connector.getIPInfo() !== null) && (message.getDestinationIP() === connector.getIPInfo().getIPv4());
+        if (forme)
+        {
+            message.decreaseTTL();            
+        }
         switch (message.getData().command) 
         {
             case "ping":

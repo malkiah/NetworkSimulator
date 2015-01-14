@@ -47,7 +47,7 @@ var Connector = function(connectable)
     
     this.send = function(message) 
     {
-        if (link != null) 
+        if ((link != null) && (message.canSend()))
         {
             link.addMessage(_self, message);
         }
