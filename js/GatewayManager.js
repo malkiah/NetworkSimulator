@@ -14,22 +14,26 @@
 function createGatewaysDiv(id) 
 {
     var host = network.getElement(id);
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = window.innerWidth / 2 - 200;
-    var t = window.innerHeight / 2 - 200;
+    var t = window.innerHeight / 2 - 200;*/
     
     var headers = ["Network", "Mask", "Gateway"];
     var data = host.getConnectable().getGatewayManager().getControllerData();
     var uigwtable = new UITable(headers, data, 'gwtable');
     
-    div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
+    /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divgwconfig');
-    div.innerHTML = host.getConnectable().getGatewayManager().getController();
-    div.innerHTML += '<p>\
-  <input type="button" id="upload" value="Save" onclick="saveGWConfig(' + id + ',\'' + uigwtable.getId() + '\');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelGWConfig(\'' + uigwtable.getId() + '\');" />\
-  </p>';
-    document.body.appendChild(div);
+    div.innerHTML = host.getConnectable().getGatewayManager().getController();*/
+    
+    var controls = '<input type="button" id="upload" value="Save" onclick="saveGWConfig(' + id + ',\'' + uigwtable.getId() + '\');" />\
+  <input type="button" id="cancel" value="Cancel" onclick="cancelGWConfig(\'' + uigwtable.getId() + '\');" />';
+    
+    var w = new UIWindow('divgwconfig', 'Gateway Configuration', 700, 400, false, 1.0);
+    w.setContent(host.getConnectable().getGatewayManager().getController());
+    w.setControls(controls);
+    w.render();
+
     uigwtable.render();
 }
 
@@ -41,7 +45,7 @@ function editGateways(id)
 
 function cancelGWConfig(uitableid) 
 {
-    removeBodyDiv('divgwconfig');
+    uimanager.getWindow("divgwconfig").dispose();
     removeBodyDiv('divbk');
     uitables[uitableid].dispose();
 }
@@ -60,7 +64,7 @@ function saveGWConfig(id, uitableid)
         var gw = data[i][2];
         host.getConnectable().getGatewayManager().addGatewayInfo(dst, mask, gw);
     }
-    removeBodyDiv('divgwconfig');
+    uimanager.getWindow("divgwconfig").dispose();
     removeBodyDiv('divbk');
     uitables[uitableid].dispose();
 }

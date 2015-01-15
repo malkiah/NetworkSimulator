@@ -37,10 +37,10 @@ function createDHCPServerInfoDiv(id)
     var controls = '<input type="button" id="upload" value="Save" onclick="saveDHCPServerData(' + id + ');" />';
     controls += '<input type="button" id="cancel" value="Cancel" onclick="cancelDHCPServerData();" />';
     
-    var window = new UIWindow('divdhcpserverinfo', 'DHCP Server', 400, 250, false, 1.0);
-    window.setContent(app.getAppController());
-    window.setControls(controls);
-    window.render();
+    var w = new UIWindow('divdhcpserverinfo', 'DHCP Server', 400, 200, false, 1.0);
+    w.setContent(app.getAppController());
+    w.setControls(controls);
+    w.render();
 }
 
 function saveDHCPServerData(id) 

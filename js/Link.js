@@ -35,12 +35,12 @@ function createLinkConnectorsDiv(id1, id2)
 {
     var host1 = network.getElement(id1);
     var host2 = network.getElement(id2);
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 200;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
-    div.setAttribute('id', 'divlinkconnectors');
+    div.setAttribute('id', 'divlinkconnectors');*/
     var html = '<table style="font-size:0.8em;">';
     html += '<tr><th>'+host1.getName()+'</th><th>'+host2.getName()+'</th></tr>';
     html += '<tr>';
@@ -52,12 +52,16 @@ function createLinkConnectorsDiv(id1, id2)
     html += '</td>';
     html += '</tr>';
     html += '</table>';
-    html += '<p>\
+    var controls = '<p>\
   <input type="button" id="upload" value="Save" onclick="saveLinkConnectors(' + id1 + ',' + id2 + ');" />\
   <input type="button" id="cancel" value="Cancel" onclick="cancelLinkConnectors();" />\
   </p>';
-    div.innerHTML = html;
-    document.body.appendChild(div);
+    /*div.innerHTML = html;
+    document.body.appendChild(div);*/
+    var w = new UIWindow('divlinkconnectors', 'Create Link', 400, 400, false, 1.0);
+    w.setContent(html);
+    w.setControls(controls);
+    w.render();
 }
 
 function saveLinkConnectors(id1, id2) 
@@ -71,7 +75,7 @@ function saveLinkConnectors(id1, id2)
         if ((c1 !== null) && (c2 !== null)) 
         {
             network.createLink(id1, c1, id2, c2);
-            removeBodyDiv('divlinkconnectors');
+            uimanager.getWindow("divlinkconnectors").dispose();
             removeBodyDiv('divbk');
         }
     }
@@ -79,7 +83,7 @@ function saveLinkConnectors(id1, id2)
 
 function cancelLinkConnectors() 
 {
-    removeBodyDiv('divlinkconnectors');
+    uimanager.getWindow("divlinkconnectors").dispose();
     removeBodyDiv('divbk');
 }
 

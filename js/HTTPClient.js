@@ -26,10 +26,10 @@ function viewWebBrowser(id)
     div.innerHTML = app.getAppController();*/
     var controls = '<input type="button" id="close" value="Close" onclick="closeWebBrowser();" />';
 
-    var window = new UIWindow('divhttpclient','HTTP Client (Browser)',400,400,false,1.0);
-    window.setContent(app.getAppController());
-    window.setControls(controls);
-    window.render();
+    var w = new UIWindow('divhttpclient','HTTP Client (Browser)',400,400,false,1.0);
+    w.setContent(app.getAppController());
+    w.setControls(controls);
+    w.render();
 }
 
 function closeWebBrowser() 

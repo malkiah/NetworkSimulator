@@ -20,30 +20,33 @@ function editNameGroup(id)
 function createNameGroupDiv(id)
 {
     var host = network.getElement(id);
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 200;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
-    div.setAttribute('id', 'divnamegroup');
+    div.setAttribute('id', 'divnamegroup');*/
     var innerHTML = '<p>';
     innerHTML += '<label for="nametxt">Name:</label>';
     innerHTML += '<input type="text" id="nametxt" value="'+ ((host.getName() === null)?"":host.getName()) +'" /><br/>';
     innerHTML += '<label for="grouptxt">Group:</label>';
     innerHTML += '<input type="text" id="grouptxt" value="'+ ((host.getGroup() === null)?"":host.getGroup()) +'" />';
     innerHTML += '</p>';
-    innerHTML += '<p>';
-    innerHTML += '<p>\
+    var controls = '<p>\
   <input type="button" id="save" value="Save" onclick="saveNameGroup('+id+');" />\
   <input type="button" id="cancel" value="Exit" onclick="cancelNameGroup();" />\
   </p>';
-    div.innerHTML = innerHTML;
-    document.body.appendChild(div);
+    /*div.innerHTML = innerHTML;
+    document.body.appendChild(div);*/
+    var w = new UIWindow('divnamegroup', 'Edit name / group', 400, 150, false, 1.0);
+    w.setContent(innerHTML);
+    w.setControls(controls);
+    w.render();
 }
 
 function cancelNameGroup()
 {
-    removeBodyDiv('divnamegroup');
+    uimanager.getWindow("divnamegroup").dispose();
     removeBodyDiv('divbk');    
 }
 
@@ -55,7 +58,7 @@ function saveNameGroup(id)
     group = (group === "")?null:group;
     host.setName(name);
     host.setGroup(group);
-    removeBodyDiv('divnamegroup');
+    uimanager.getWindow("divnamegroup").dispose();
     removeBodyDiv('divbk');    
 }
 
@@ -131,15 +134,15 @@ function createNATDiv(id)
 {
     var host = network.getElement(id);
     var div = document.createElement("div");
-    var l = window.innerWidth / 2 - 350;
-    var t = window.innerHeight / 2 - 200;
+    /*var l = window.innerWidth / 2 - 350;
+    var t = window.innerHeight / 2 - 200;*/
     
     var headers = ["Input interface","WAN Port","LAN Port","IP"];
     var data = host.getConnectable().getTrafficManager().getNATData();
-    var uidnstable = new UITable(headers,data,'nattable');
+    var uinattable = new UITable(headers,data,'nattable');
     
-    div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
-    div.setAttribute('id', 'divnatconfig');
+    /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
+    div.setAttribute('id', 'divnatconfig');*/
     var innerHTML = "";
     if (host.getType() === "router")
     {
@@ -150,18 +153,22 @@ function createNATDiv(id)
         innerHTML += "</p>";
     }
     innerHTML += '<table id="nattable" style="font-size:0.8em;width:100%;"></table>';
-    innerHTML += '<p>\
-  <input type="button" id="upload" value="Save" onclick="saveNATConfig(' + id + ',\''+uidnstable.getId()+'\');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelNATConfig(\''+uidnstable.getId()+'\');" />\
+    var controls = '<p>\
+  <input type="button" id="upload" value="Save" onclick="saveNATConfig(' + id + ',\''+uinattable.getId()+'\');" />\
+  <input type="button" id="cancel" value="Cancel" onclick="cancelNATConfig(\''+uinattable.getId()+'\');" />\
   </p>';
-    div.innerHTML = innerHTML;
-    document.body.appendChild(div);
-    uidnstable.render();
+    /*div.innerHTML = innerHTML;
+    document.body.appendChild(div);*/
+    var w = new UIWindow('divnatconfig', 'Edit NAT', 700, 400, false, 1.0);
+    w.setContent(innerHTML);
+    w.setControls(controls);
+    w.render();
+    uinattable.render();
 }
 
 function cancelNATConfig(uitableid) 
 {
-    removeBodyDiv('divnatconfig');
+    uimanager.getWindow("divnatconfig").dispose();
     removeBodyDiv('divbk');
     uitables[uitableid].dispose();
 }
@@ -180,7 +187,7 @@ function saveNATConfig(id, uitableid)
     {
         host.getConnectable().setPerformNAT(performNAT.checked);
     };
-    removeBodyDiv('divnatconfig');
+    uimanager.getWindow("divnatconfig").dispose();
     removeBodyDiv('divbk');
     uitables[uitableid].dispose();
 }
@@ -207,19 +214,23 @@ function createIpDiv(id, pos)
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divipinfo');
-    div.innerHTML = '<label for="ip">IP Address:</label>';
-    div.innerHTML += '<input id="ip" type="text" value="'+ ip +'" /><br/>';
-    div.innerHTML += '<label for="nm">Network Mask:</label>';
-    div.innerHTML += '<input id="nm" type="text" value="'+ nm +'" /><br/>';
-    div.innerHTML += '<label for="dns1">DNS 1:</label>';
-    div.innerHTML += '<input id="dns1" type="text" value="'+ dns1 +'" /><br/>';
-    div.innerHTML += '<label for="dns2">DNS 2:</label>';
-    div.innerHTML += '<input id="dns2" type="text" value="'+ dns2 +'" /><br/>';
-    div.innerHTML += '<p>\
+    var innerHTML = '<label for="ip">IP Address:</label>';
+    innerHTML += '<input id="ip" type="text" value="'+ ip +'" /><br/>';
+    innerHTML += '<label for="nm">Network Mask:</label>';
+    innerHTML += '<input id="nm" type="text" value="'+ nm +'" /><br/>';
+    innerHTML += '<label for="dns1">DNS 1:</label>';
+    innerHTML += '<input id="dns1" type="text" value="'+ dns1 +'" /><br/>';
+    innerHTML += '<label for="dns2">DNS 2:</label>';
+    innerHTML += '<input id="dns2" type="text" value="'+ dns2 +'" /><br/>';
+    var controls = '<p>\
   <input type="button" id="upload" value="Save" onclick="saveIpInfo('+id+','+pos+');" />\
   <input type="button" id="cancel" value="Cancel" onclick="cancelIpInfo();" />\
   </p>';
-    document.body.appendChild(div);
+    //document.body.appendChild(div);
+    var w = new UIWindow('divipinfo', 'Edit IP Info', 400, 150, false, 1.0);
+    w.setContent(innerHTML);
+    w.setControls(controls);
+    w.render();
 }
 
 function saveIpInfo(id, pos) 
@@ -242,13 +253,13 @@ function saveIpInfo(id, pos)
     host.getConnectable().getIPInfo(pos).setDNS2(dns2);
     host.getConnectable().getIPInfo(pos).setStatic(true);
 
-    removeBodyDiv('divipinfo');
+    uimanager.getWindow("divipinfo").dispose();
     removeBodyDiv('divbk');
 }
 
 function cancelIpInfo() 
 {
-    removeBodyDiv('divipinfo');
+    uimanager.getWindow("divipinfo").dispose();
     removeBodyDiv('divbk');
 }
 

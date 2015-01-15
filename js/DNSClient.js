@@ -21,23 +21,24 @@ function createDNSLookupDiv(id)
 {
     var host = network.getElement(id);
     var app = host.getApp("DNSClient");
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 75;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divdnslookup');
-    div.innerHTML = app.getAppController();
-    div.innerHTML += '<p>\
-  <input type="button" id="upload" value="Lookup" onclick="requestDNSLookup(' + id + ');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelDNSLookup();" />\
-  </p>';
-    document.body.appendChild(div);
+    div.innerHTML = app.getAppController();*/
+    var controls = '<input type="button" id="upload" value="Lookup" onclick="requestDNSLookup(' + id + ');" />\
+  <input type="button" id="cancel" value="Cancel" onclick="cancelDNSLookup();" />';
+    var w = new UIWindow('divdnslookup', 'DNS Lookup', 400, 200, false, 1.0);
+    w.setContent(app.getAppController());
+    w.setControls(controls);
+    w.render();
 }
 
 function cancelDNSLookup() 
 {
-    removeBodyDiv('divdnslookup');
+    uimanager.getWindow("divdnslookup").dispose();
     removeBodyDiv('divbk');
 }
 
@@ -46,7 +47,7 @@ function requestDNSLookup(id)
     var elem = network.getElement(id);
     var domain = document.getElementById("dnsclientdomain").value;
     elem.getApp("DNSClient").DNSLookup(domain);
-    removeBodyDiv('divdnslookup');
+    uimanager.getWindow("divdnslookup").dispose();
     removeBodyDiv('divbk');
 }
 

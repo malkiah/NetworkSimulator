@@ -21,9 +21,9 @@ function createHTTPServerInfoDiv1(id)
 {
     var host = network.getElement(id);
     var app = host.getApp("HTTPServer");
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = window.innerWidth / 2 - 200;
-    var t = window.innerHeight / 2 - 200;
+    var t = window.innerHeight / 2 - 200;*/
     
     var headers = ["Domain"];
     var data = app.getAppControllerData1();
@@ -31,14 +31,14 @@ function createHTTPServerInfoDiv1(id)
     uihttptable.setSecondary(true, "editDomainHTTPServerInfo");
     uihttptable.setParam("hostid", id);
     
-    div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;overflow-y:scroll;');
-    div.setAttribute('id', 'divhttpserverinfo');
-    div.innerHTML = app.getAppController1();
-    div.innerHTML += '<p>\
-  <input type="button" id="upload" value="Save" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />\
-  </p>';
-    document.body.appendChild(div);
+    /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;overflow-y:scroll;');
+    div.setAttribute('id', 'divhttpserverinfo');*/
+    var controls = '<input type="button" id="upload" value="Save" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
+  <input type="button" id="cancel" value="Cancel" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />';
+    var w = new UIWindow('divhttpserverinfo', 'HTTP Server', 400, 400, false, 1.0);
+    w.setContent(app.getAppController1());
+    w.setControls(controls);
+    w.render();
     uihttptable.render();
 }
 
@@ -46,23 +46,28 @@ function createHTTPServerInfoDiv1back(id, uitableid)
 {
     var host = network.getElement(id);
     var app = host.getApp("HTTPServer");
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 200;
+    var t = document.body.clientHeight / 2 - 200;*/
     
     var primaryuitableid = uitables[uitableid].getParam("primaryuitableid");
     var headers = ["Domain"];
     var data = uitables[primaryuitableid].getData();
     var uihttptable = uitables[primaryuitableid];
     
-    div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;overflow-y:scroll;');
+    /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;overflow-y:scroll;');
     div.setAttribute('id', 'divhttpserverinfo');
     div.innerHTML = app.getAppController1();
     div.innerHTML += '<p>\
   <input type="button" id="upload" value="Save" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
   <input type="button" id="cancel" value="Cancel" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />\
-  </p>';
-    document.body.appendChild(div);
+  </p>';*/
+    var controls = '<input type="button" id="upload" value="Save" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
+  <input type="button" id="cancel" value="Cancel" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />';
+    var w = new UIWindow('divhttpserverinfo', 'HTTP Server', 400, 400, false, 1.0);
+    w.setContent(app.getAppController1());
+    w.setControls(controls);
+    w.render();
     uihttptable.render();
 }
 
@@ -70,9 +75,9 @@ function createHTTPServerInfoDiv2(id, primaryuitableid, filedata)
 {
     var host = network.getElement(id);
     var app = host.getApp("HTTPServer");
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = document.body.clientWidth / 2 - 200;
-    var t = document.body.clientHeight / 2 - 200;
+    var t = document.body.clientHeight / 2 - 200;*/
     
     var headers = ["File"];
     var data = filedata;
@@ -81,13 +86,14 @@ function createHTTPServerInfoDiv2(id, primaryuitableid, filedata)
     uihttpfiletable.setParam("hostid", id);
     uihttpfiletable.setParam("primaryuitableid", primaryuitableid);
     
-    div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;overflow-y:scroll;');
+    /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;overflow-y:scroll;');
     div.setAttribute('id', 'divhttpfileserverinfo');
-    div.innerHTML = app.getAppController2();
-    div.innerHTML += '<p>\
-  <input type="button" id="upload" value="Back" onclick="backHTTPServerData2(' + id + ',\'' + uihttpfiletable.getId() + '\');" />\
-  </p>';
-    document.body.appendChild(div);
+    div.innerHTML = app.getAppController2();*/
+    var controls = '<input type="button" id="upload" value="Back" onclick="backHTTPServerData2(' + id + ',\'' + uihttpfiletable.getId() + '\');" />';
+    var w = new UIWindow('divhttpfileserverinfo', 'HTTP Domain Files', 400, 400, false, 1.0);
+    w.setContent(app.getAppController2());
+    w.setControls(controls);
+    w.render();
     uihttpfiletable.render();
 }
 
@@ -97,17 +103,18 @@ function createHTTPServerInfoDiv3(id, secondarytableid, row)
     var contents = secondarydata[row][1];
     var host = network.getElement(id);
     var app = host.getApp("HTTPServer");
-    var div = document.createElement("div");
+    /*var div = document.createElement("div");
     var l = document.body.clientWidth / 2 - 200;
     var t = document.body.clientHeight / 2 - 75;
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divhttpcontentsserverinfo');
-    div.innerHTML = app.getAppController3(contents);
-    div.innerHTML += '<p>\
-  <input type="button" id="upload" value="Back" onclick="backHTTPServerData3(' + id + ',\'' + secondarytableid + '\',' + row + ');" />\
-  </p>';
-    document.body.appendChild(div);
+    div.innerHTML = app.getAppController3(contents);*/
+    var controls = '<input type="button" id="upload" value="Back" onclick="backHTTPServerData3(' + id + ',\'' + secondarytableid + '\',' + row + ');" />';
+    var w = new UIWindow('divhttpcontentsserverinfo', 'HTTP Domain File Edition', 400, 200, false, 1.0);
+    w.setContent(app.getAppController3(contents));
+    w.setControls(controls);
+    w.render();
 }
 
 function backHTTPServerData3(id, secondarytableid, row) 
@@ -115,7 +122,8 @@ function backHTTPServerData3(id, secondarytableid, row)
     var secondarydata = uitables[secondarytableid].getData();
     var contents = document.getElementById("httpcontents").value;
     secondarydata[row][1] = contents;
-    removeBodyDiv('divhttpcontentsserverinfo');
+    /*removeBodyDiv('divhttpcontentsserverinfo');*/
+    uimanager.getWindow("divhttpcontentsserverinfo").dispose();
     var primaryuitableid = uitables[secondarytableid].getParam("primaryuitableid");
     createHTTPServerInfoDiv2(id, primaryuitableid, secondarydata);
 }
@@ -128,7 +136,8 @@ function editFileHTTPServerInfo(secondarytableid, row)
     {
         secondarydata[row][1] = "";
     }
-    removeBodyDiv('divhttpfileserverinfo');
+    //removeBodyDiv('divhttpfileserverinfo');
+    uimanager.getWindow("divhttpfileserverinfo").dispose();
     createHTTPServerInfoDiv3(id, secondarytableid, row);
 }
 
@@ -141,13 +150,15 @@ function editDomainHTTPServerInfo(primaryuitableid, row)
         primarydata[row][1] = [];
     }
     var filedata = primarydata[row][1];
-    removeBodyDiv('divhttpserverinfo');
+    //removeBodyDiv('divhttpserverinfo');
+    uimanager.getWindow("divhttpserverinfo").dispose();
     createHTTPServerInfoDiv2(id, primaryuitableid, filedata);
 }
 
 function backHTTPServerData2(id, uitableid) 
 {
-    removeBodyDiv('divhttpfileserverinfo');
+    //removeBodyDiv('divhttpfileserverinfo');
+    uimanager.getWindow("divhttpfileserverinfo").dispose();
     createHTTPServerInfoDiv1back(id, uitableid);
 }
 
@@ -176,14 +187,16 @@ function saveHTTPServerData1(id, uitableid)
         }
     }
     
-    removeBodyDiv('divhttpserverinfo');
+    //removeBodyDiv('divhttpserverinfo');
+    uimanager.getWindow("divhttpserverinfo").dispose();
     removeBodyDiv('divbk');
     uitables[uitableid].dispose();
 }
 
 function cancelHTTPServerData1(uitableid) 
 {
-    removeBodyDiv('divhttpserverinfo');
+    //removeBodyDiv('divhttpserverinfo');
+    uimanager.getWindow("divhttpserverinfo").dispose();
     removeBodyDiv('divbk');
     uitables[uitableid].dispose();
 }

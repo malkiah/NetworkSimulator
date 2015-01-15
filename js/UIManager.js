@@ -1,4 +1,4 @@
-/*
+ /*
  * This file is part of the Education Network Simulator project and covered 
  * by GPLv3 license. See full terms in the LICENSE file at the root folder
  * or at http://www.gnu.org/licenses/gpl-3.0.html.
@@ -44,7 +44,7 @@ function removeBodyDiv(name)
 
 function cancelUpload() 
 {
-    removeBodyDiv('divupload');
+    uimanager.getWindow("divupload").dispose();
     removeBodyDiv('divbk');
 }
 
@@ -58,24 +58,27 @@ function confirmUpload()
         network.load(data);
     };
     reader.readAsText(file);
-    removeBodyDiv('divupload');
+    uimanager.getWindow("divupload").dispose();
     removeBodyDiv('divbk');
 }
 
 function createUploadDiv() 
 {
     var div = document.createElement("div");
-    var w = window
-    var l = window.innerWidth / 2 - 200;
+    /*var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 75;
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
-    div.setAttribute('id', 'divupload');
-    div.innerHTML = '<p><input type="file" id="uploaddata" name="uploaddata" /></p>\
-  <p>\
+    div.setAttribute('id', 'divupload');*/
+    var innerHTML = '<p><input type="file" id="uploaddata" name="uploaddata" /></p>';
+    var controls = '<p>\
   <input type="button" id="upload" value="Upload" onclick="confirmUpload();" />\
   <input type="button" id="cancel" value="Cancel" onclick="cancelUpload();" />\
   </p>';
-    document.body.appendChild(div);
+    //document.body.appendChild(div);
+    var w = new UIWindow('divupload', 'Upload file', 400, 150, false, 1.0);
+    w.setContent(innerHTML);
+    w.setControls(controls);
+    w.render();
 }
 
 function uploadClick() 
@@ -164,21 +167,21 @@ var UIManager = function()
         _self.addClickable(rect);
     }
     
-    this.addWindow = function(w)
+    this.addWindow = function(w) 
     {
         windows[w.getId()] = w;
     };
-
-    this.getWindow = function(id)
+    
+    this.getWindow = function(id) 
     {
         return windows[id];
     };
-
-    this.removeWindow = function(w)
+    
+    this.removeWindow = function(w) 
     {
         delete windows[w.getId()];
     };
-
+    
     this.reset = function() 
     {
         this.clickables = [];
@@ -654,7 +657,7 @@ var UIManager = function()
                                 selectLinkConnectors(network.getSelected().id, clicked.getObject().getOwner().id);
                                 state = STATE_ELEMENT_SELECTED_MOUSE_UP;
                             }
-                        }
+                        } 
                         else 
                         {
                             hideAllMenus();
