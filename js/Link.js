@@ -260,7 +260,7 @@ var Link = function(c1, c2)
         var newmessages = [];
         for (var i = 0; i < messages.length; i++) 
         {
-            messages[i].pos += MSG_ADVANCE;
+            messages[i].pos += AnimationControls.MSG_ADVANCE;
             if (messages[i].pos < 100) 
             {
                 newmessages.push(messages[i]);

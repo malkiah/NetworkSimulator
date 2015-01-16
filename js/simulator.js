@@ -57,5 +57,7 @@ function simulator(imgs)
     {
       network.load(NetworkSimulator.initialdata);
     }
+
+    createControlsWindow();
 }
 

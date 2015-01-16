@@ -43,11 +43,11 @@ var UIWindow = function(windowid, title, w, h, scrollable, opacity)
 
     var _self = this;
     
-    function windowMouseDownEvent(event)
+    function windowMouseDownEvent(e)
     {
         var bbox = titlediv.getBoundingClientRect();
-        var evt_x = event.clientX;
-        var evt_y = event.clientY;
+        var evt_x = e.clientX;
+        var evt_y = e.clientY;
         
         if ((bbox.left <= evt_x) && (evt_x <= (bbox.left + bbox.width))
             && (bbox.top <= evt_y) && (evt_y <= (bbox.top + bbox.height)))
@@ -63,8 +63,8 @@ var UIWindow = function(windowid, title, w, h, scrollable, opacity)
     
     function windowMouseMoveEvent(e)
     {
-        var evt_x = event.clientX;
-        var evt_y = event.clientY;
+        var evt_x = e.clientX;
+        var evt_y = e.clientY;
         
         dispatchEvent(evt_x, evt_y, ACTION_MOUSE_MOVE);
     }
@@ -113,7 +113,7 @@ var UIWindow = function(windowid, title, w, h, scrollable, opacity)
         
         titlediv = document.createElement("div");
         titlediv.setAttribute('id', windowid + "_title");
-        titlediv.setAttribute('style', 'width:100%;height:20px;background-color:blue;color:white;font-weight:bold;');
+        titlediv.setAttribute('style', 'width:100%;height:20px;background-color:blue;color:white;font-weight:bold;-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;');
         titlediv.innerHTML = title;
         
         contentDiv = document.createElement("div");
@@ -163,6 +163,18 @@ var UIWindow = function(windowid, title, w, h, scrollable, opacity)
     this.getId = function()
     {
         return windowid;
+    };
+
+    this.getPos = function()
+    {
+        return {x: x, y: y};
+    };
+
+    this.setPos = function(nx, ny)
+    {
+        x = nx;
+        y = ny;
+        outerdiv.setAttribute('style', getOuterStyle());
     };
     
     init();
