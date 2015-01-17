@@ -410,7 +410,7 @@ var TrafficManager = function(connectable, limitbroadcast, performNAT)
                 // Si es para mí, y es mi IP, y no es una respuesta a un id en la tabla, hago log
                 else if (forme && myip && !(message.getData().originMessageId in icmpResponses)) 
                 {
-                    addDiagnosticInfo("Ping response recieved from " + message.getOriginIP());
+                    addDiagnosticInfo(_("Ping response recieved from ") + message.getOriginIP());
                 } 
                 // Si es para mí, y no es mi IP, y no es una respuesta a un id en la tabla, busco MAC y envio
                 else if (forme && !myip && !(message.getData().originMessageId in icmpResponses)) 
@@ -447,7 +447,7 @@ var TrafficManager = function(connectable, limitbroadcast, performNAT)
                 // Si es para mí, y es mi IP, y no es una respuesta a un id en la tabla, hago log
                 else if (forme && myip && !(message.getData().originMessageId in icmpResponses)) 
                 {
-                    addDiagnosticInfo(message.getData().seq + " - Traceroute to " + message.getData().dstIp + ": " + message.getOriginIP());
+                    addDiagnosticInfo(message.getData().seq + _(" - Traceroute to ") + message.getData().dstIp + ": " + message.getOriginIP());
                 } 
                 // Si es para mí, y no es mi IP, y no es una respuesta a un id en la tabla, busco MAC y envio
                 else if (forme && !myip && !(message.getData().originMessageId in icmpResponses)) 
@@ -507,7 +507,8 @@ var TrafficManager = function(connectable, limitbroadcast, performNAT)
     {
         var result = "";
         
-        for (var i = (diagnosticsLog.length > 15 ? diagnosticsLog.length - 16 : 0); i < diagnosticsLog.length; i++) 
+        //for (var i = (diagnosticsLog.length > 15 ? diagnosticsLog.length - 16 : 0); i < diagnosticsLog.length; i++)
+        for (var i = diagnosticsLog.length-1; i >= 0; i--) 
         {
             result += (diagnosticsLog[i] + ((i === diagnosticsLog.length) ? "" : "<br/>"));
         }
@@ -561,6 +562,7 @@ var TrafficManager = function(connectable, limitbroadcast, performNAT)
                 data, 
                 images[IMAGE_ENVELOPEICMP]
                 );
+                addDiagnosticInfo(_("Sending ping to: ") + message.getDestinationIP());
                 connectable.getConnector(ifacepos).send(message);
             }
         }
@@ -603,6 +605,7 @@ var TrafficManager = function(connectable, limitbroadcast, performNAT)
                 data, 
                 images[IMAGE_ENVELOPEICMP]
                 );
+                addDiagnosticInfo(_("Sending traceroute to: ") + message.getDestinationIP());
                 connectable.getConnector(ifacepos).send(message);
             }
         }

@@ -18,7 +18,7 @@ function createGatewaysDiv(id)
     var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 200;*/
     
-    var headers = ["Network", "Mask", "Gateway"];
+    var headers = [_("Network"), _("Mask"), _("Gateway")];
     var data = host.getConnectable().getGatewayManager().getControllerData();
     var uigwtable = new UITable(headers, data, 'gwtable');
     
@@ -26,10 +26,10 @@ function createGatewaysDiv(id)
     div.setAttribute('id', 'divgwconfig');
     div.innerHTML = host.getConnectable().getGatewayManager().getController();*/
     
-    var controls = '<input type="button" id="upload" value="Save" onclick="saveGWConfig(' + id + ',\'' + uigwtable.getId() + '\');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelGWConfig(\'' + uigwtable.getId() + '\');" />';
+    var controls = '<input type="button" id="upload" value="'+_("Save")+'" onclick="saveGWConfig(' + id + ',\'' + uigwtable.getId() + '\');" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelGWConfig(\'' + uigwtable.getId() + '\');" />';
     
-    var w = new UIWindow('divgwconfig', 'Gateway Configuration', 700, 400, false, 1.0);
+    var w = new UIWindow('divgwconfig', _('Gateway Configuration'), 700, 400, false, 1.0);
     w.setContent(host.getConnectable().getGatewayManager().getController());
     w.setControls(controls);
     w.render();

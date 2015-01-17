@@ -34,8 +34,8 @@ function createDHCPServerInfoDiv(id)
   </p>';
     document.body.appendChild(div);*/
     
-    var controls = '<input type="button" id="upload" value="Save" onclick="saveDHCPServerData(' + id + ');" />';
-    controls += '<input type="button" id="cancel" value="Cancel" onclick="cancelDHCPServerData();" />';
+    var controls = '<input type="button" id="upload" value="'+_("Save")+'" onclick="saveDHCPServerData(' + id + ');" />';
+    controls += '<input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelDHCPServerData();" />';
     
     var w = new UIWindow('divdhcpserverinfo', 'DHCP Server', 400, 200, false, 1.0);
     w.setContent(app.getAppController());
@@ -222,15 +222,15 @@ var DHCPServer = function(ifacepos)
     this.getAppController = function() 
     {
         var id = network.getPosForElement(owner);
-        result = "<label for='dhcpinitial'>Initial:</label> \
+        result = "<label for='dhcpinitial'>"+_("Initial:")+"</label> \
     <input type='text' id='dhcpinitial' value='" + initial + "' /><br/> \
-    <label for='dhcpend'>Final:</label> \
+    <label for='dhcpend'>"+_("Final:")+"</label> \
     <input type='text' id='dhcpend' value='" + end + "' /><br/> \
-    <label for='dhcpgw'>Gateway:</label> \
+    <label for='dhcpgw'>"+_("Gateway:")+"</label> \
     <input type='text' id='dhcpgw' value='" + ((gateway === null) ? "" : gateway) + "' /><br/> \
-    <label for='dhcpdns1'>DNS 1:</label> \
+    <label for='dhcpdns1'>"+_("DNS 1:")+"</label> \
     <input type='text' id='dhcpdns1' value='" + ((dns1 === null) ? "" : dns1) + "' /><br/> \
-    <label for='dhcpdns2'>DNS 2:</label> \
+    <label for='dhcpdns2'>"+_("DNS 2:")+"</label> \
     <input type='text' id='dhcpdns2' value='" + ((dns2 === null) ? "" : dns2) + "' /><br/> \
     ";
         return result;

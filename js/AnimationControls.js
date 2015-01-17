@@ -38,7 +38,7 @@ var AnimationControls =
 
 function createControlsWindow()
 {
-    AnimationControls.controlsWindow = new UIWindow("controlswindow", "Animation Controls", 150, 50,false,1.0);
+    AnimationControls.controlsWindow = new UIWindow("controlswindow", "Animation Controls", 200, 50,false,1.0);
     var pos = AnimationControls.controlsWindow.getPos();
     AnimationControls.controlsWindow.setPos(pos.x, 5);
 

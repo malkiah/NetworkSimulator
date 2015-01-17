@@ -25,15 +25,15 @@ function createDNSServerConfigDiv(id)
     var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 200;*/
     
-    var headers = ["Domain", "IP"];
+    var headers = [_("Domain"), _("IP")];
     var data = app.getAppControllerData();
     var uidnstable = new UITable(headers, data, 'dnstable');
     
     /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divdnsserverconfig');
     div.innerHTML = app.getAppController();*/
-    var controls = '<input type="button" id="upload" value="Save" onclick="saveDNSServerConfig(' + id + ',\'' + uidnstable.getId() + '\');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelDNSServerConfig(\'' + uidnstable.getId() + '\');" />';
+    var controls = '<input type="button" id="upload" value="'+_("Save")+'" onclick="saveDNSServerConfig(' + id + ',\'' + uidnstable.getId() + '\');" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelDNSServerConfig(\'' + uidnstable.getId() + '\');" />';
     var w = new UIWindow('divdnsserverconfig', 'DNS Server', 400, 400, false, 1.0);
     w.setContent(app.getAppController());
     w.setControls(controls);
@@ -322,7 +322,7 @@ var DNSServer = function(ifacepos)
         var id = network.getPosForElement(owner);
         result = "<table id='dnstable' style='font-size:0.8em;'></table>";
         result += "<p>";
-        result += "<label for='forwarder'>Forwarder:</label>";
+        result += "<label for='forwarder'>"+_("Forwarder:")+"</label>";
         var fwderval = (forwarder === null) ? "" : forwarder;
         result += "<input type='text' id='forwarder' value='" + fwderval + "' />";
         result += "</p>";

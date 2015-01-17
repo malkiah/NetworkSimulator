@@ -27,18 +27,18 @@ function createNameGroupDiv(id)
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:700px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divnamegroup');*/
     var innerHTML = '<p>';
-    innerHTML += '<label for="nametxt">Name:</label>';
+    innerHTML += '<label for="nametxt">'+_("Name:")+'</label>';
     innerHTML += '<input type="text" id="nametxt" value="'+ ((host.getName() === null)?"":host.getName()) +'" /><br/>';
-    innerHTML += '<label for="grouptxt">Group:</label>';
+    innerHTML += '<label for="grouptxt">'+_("Group:")+'</label>';
     innerHTML += '<input type="text" id="grouptxt" value="'+ ((host.getGroup() === null)?"":host.getGroup()) +'" />';
     innerHTML += '</p>';
     var controls = '<p>\
-  <input type="button" id="save" value="Save" onclick="saveNameGroup('+id+');" />\
-  <input type="button" id="cancel" value="Exit" onclick="cancelNameGroup();" />\
+  <input type="button" id="save" value="'+_("Save")+'" onclick="saveNameGroup('+id+');" />\
+  <input type="button" id="cancel" value="'+_("Exit")+'" onclick="cancelNameGroup();" />\
   </p>';
     /*div.innerHTML = innerHTML;
     document.body.appendChild(div);*/
-    var w = new UIWindow('divnamegroup', 'Edit name / group', 400, 150, false, 1.0);
+    var w = new UIWindow('divnamegroup', _('Edit name / group'), 400, 150, false, 1.0);
     w.setContent(innerHTML);
     w.setControls(controls);
     w.render();
@@ -90,10 +90,10 @@ function createDiagnosticsDiv(id)
     innerHTML += '<input type="button" id="ping" value="Ping" onclick="diagnosticsPing('+id+')" />';
     innerHTML += '<input type="button" id="traceroute" value="Trace Route" onclick="diagnosticsTraceroute('+id+')" />';
     innerHTML += '</p>';
-    innerHTML += '<div style="width:100%;height:250px;text-align:left;font-size:0.8em;font-style:italic;" id="diagnosticsconsole" >';
+    innerHTML += '<div style="width:100%;height:250px;text-align:left;font-size:0.8em;font-style:italic;overflow-y:scroll;" id="diagnosticsconsole" >';
     innerHTML += host.getConnectable().getTrafficManager().getDiagnosticsInfo();
     innerHTML += '</div>';
-    var controls = '<input type="button" id="cancel" value="Exit" onclick="cancelDiagnostics();" />';
+    var controls = '<p><input type="button" id="cancel" value="'+_("Exit")+'" onclick="cancelDiagnostics();" /></p>';
     /*div.innerHTML = innerHTML;
     document.body.appendChild(div);*/
     var window = new UIWindow('divdiagnostics','Network diagnostics',400,400,false,1.0);
@@ -137,7 +137,7 @@ function createNATDiv(id)
     /*var l = window.innerWidth / 2 - 350;
     var t = window.innerHeight / 2 - 200;*/
     
-    var headers = ["Input interface","WAN Port","LAN Port","IP"];
+    var headers = [_("Input interface"),_("WAN Port"),_("LAN Port"),_("IP")];
     var data = host.getConnectable().getTrafficManager().getNATData();
     var uinattable = new UITable(headers,data,'nattable');
     
@@ -149,13 +149,13 @@ function createNATDiv(id)
         var chktxt = (host.getConnectable().getPerformNAT()?"checked='checked'":"");
         innerHTML += "<p>";
         innerHTML += "<input type='checkbox' id='performNAT' "+chktxt+" />";
-        innerHTML += "<label for='performNAT'>Gateway mode (uses NAT).</label>";
+        innerHTML += "<label for='performNAT'>"+_("Gateway mode (uses NAT).")+"</label>";
         innerHTML += "</p>";
     }
     innerHTML += '<table id="nattable" style="font-size:0.8em;width:100%;"></table>';
     var controls = '<p>\
-  <input type="button" id="upload" value="Save" onclick="saveNATConfig(' + id + ',\''+uinattable.getId()+'\');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelNATConfig(\''+uinattable.getId()+'\');" />\
+  <input type="button" id="upload" value="'+_("Save")+'" onclick="saveNATConfig(' + id + ',\''+uinattable.getId()+'\');" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelNATConfig(\''+uinattable.getId()+'\');" />\
   </p>';
     /*div.innerHTML = innerHTML;
     document.body.appendChild(div);*/
@@ -214,17 +214,17 @@ function createIpDiv(id, pos)
     
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divipinfo');
-    var innerHTML = '<label for="ip">IP Address:</label>';
+    var innerHTML = '<label for="ip">'+_("IP Address:")+'</label>';
     innerHTML += '<input id="ip" type="text" value="'+ ip +'" /><br/>';
-    innerHTML += '<label for="nm">Network Mask:</label>';
+    innerHTML += '<label for="nm">'+_("Network Mask:")+'</label>';
     innerHTML += '<input id="nm" type="text" value="'+ nm +'" /><br/>';
-    innerHTML += '<label for="dns1">DNS 1:</label>';
+    innerHTML += '<label for="dns1">'+_("DNS 1:")+'</label>';
     innerHTML += '<input id="dns1" type="text" value="'+ dns1 +'" /><br/>';
-    innerHTML += '<label for="dns2">DNS 2:</label>';
+    innerHTML += '<label for="dns2"'+_(">DNS 2:")+'</label>';
     innerHTML += '<input id="dns2" type="text" value="'+ dns2 +'" /><br/>';
     var controls = '<p>\
-  <input type="button" id="upload" value="Save" onclick="saveIpInfo('+id+','+pos+');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelIpInfo();" />\
+  <input type="button" id="upload" value="'+_("Save")+'" onclick="saveIpInfo('+id+','+pos+');" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelIpInfo();" />\
   </p>';
     //document.body.appendChild(div);
     var w = new UIWindow('divipinfo', 'Edit IP Info', 400, 150, false, 1.0);
@@ -401,7 +401,7 @@ var Host = function(type, ports)
     
     this.getConnectorDesc = function(i) 
     {
-        var result = "Interface " + i;
+        var result = _("Interface ") + i;
         if (type === "router") 
         {
             result = (i === ROUTER_WAN) ? "WAN" : "LAN";
@@ -524,7 +524,7 @@ var Host = function(type, ports)
         else if (connectable.getIpMode() === IPMODE_SHARED)
         {
             result += "\n";
-            result += "IP: ";
+            result += _("IP: ");
             result += ": ";
             result += (connectable.getIPInfo(0).getIPv4() === null)?"-":connectable.getIPInfo(0).getIPv4();
         }

@@ -25,7 +25,7 @@ function createHTTPServerInfoDiv1(id)
     var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 200;*/
     
-    var headers = ["Domain"];
+    var headers = [_("Domain")];
     var data = app.getAppControllerData1();
     var uihttptable = new UITable(headers, data, 'httptable');
     uihttptable.setSecondary(true, "editDomainHTTPServerInfo");
@@ -33,8 +33,8 @@ function createHTTPServerInfoDiv1(id)
     
     /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;overflow-y:scroll;');
     div.setAttribute('id', 'divhttpserverinfo');*/
-    var controls = '<input type="button" id="upload" value="Save" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />';
+    var controls = '<input type="button" id="upload" value="'+_("Save")+'" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />';
     var w = new UIWindow('divhttpserverinfo', 'HTTP Server', 400, 400, false, 1.0);
     w.setContent(app.getAppController1());
     w.setControls(controls);
@@ -51,7 +51,7 @@ function createHTTPServerInfoDiv1back(id, uitableid)
     var t = document.body.clientHeight / 2 - 200;*/
     
     var primaryuitableid = uitables[uitableid].getParam("primaryuitableid");
-    var headers = ["Domain"];
+    var headers = [_("Domain")];
     var data = uitables[primaryuitableid].getData();
     var uihttptable = uitables[primaryuitableid];
     
@@ -62,8 +62,8 @@ function createHTTPServerInfoDiv1back(id, uitableid)
   <input type="button" id="upload" value="Save" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
   <input type="button" id="cancel" value="Cancel" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />\
   </p>';*/
-    var controls = '<input type="button" id="upload" value="Save" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />';
+    var controls = '<input type="button" id="upload" value="'+_("Save")+'" onclick="saveHTTPServerData1(' + id + ',\'' + uihttptable.getId() + '\');" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelHTTPServerData1(\'' + uihttptable.getId() + '\');" />';
     var w = new UIWindow('divhttpserverinfo', 'HTTP Server', 400, 400, false, 1.0);
     w.setContent(app.getAppController1());
     w.setControls(controls);
@@ -79,7 +79,7 @@ function createHTTPServerInfoDiv2(id, primaryuitableid, filedata)
     var l = document.body.clientWidth / 2 - 200;
     var t = document.body.clientHeight / 2 - 200;*/
     
-    var headers = ["File"];
+    var headers = [_("File")];
     var data = filedata;
     var uihttpfiletable = new UITable(headers, data, 'httpfiletable');
     uihttpfiletable.setSecondary(true, "editFileHTTPServerInfo");
@@ -89,7 +89,7 @@ function createHTTPServerInfoDiv2(id, primaryuitableid, filedata)
     /*div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;overflow-y:scroll;');
     div.setAttribute('id', 'divhttpfileserverinfo');
     div.innerHTML = app.getAppController2();*/
-    var controls = '<input type="button" id="upload" value="Back" onclick="backHTTPServerData2(' + id + ',\'' + uihttpfiletable.getId() + '\');" />';
+    var controls = '<input type="button" id="upload" value="'+_("Back")+'" onclick="backHTTPServerData2(' + id + ',\'' + uihttpfiletable.getId() + '\');" />';
     var w = new UIWindow('divhttpfileserverinfo', 'HTTP Domain Files', 400, 400, false, 1.0);
     w.setContent(app.getAppController2());
     w.setControls(controls);
@@ -110,7 +110,7 @@ function createHTTPServerInfoDiv3(id, secondarytableid, row)
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divhttpcontentsserverinfo');
     div.innerHTML = app.getAppController3(contents);*/
-    var controls = '<input type="button" id="upload" value="Back" onclick="backHTTPServerData3(' + id + ',\'' + secondarytableid + '\',' + row + ');" />';
+    var controls = '<input type="button" id="upload" value="'+_("Back")+'" onclick="backHTTPServerData3(' + id + ',\'' + secondarytableid + '\',' + row + ');" />';
     var w = new UIWindow('divhttpcontentsserverinfo', 'HTTP Domain File Edition', 400, 200, false, 1.0);
     w.setContent(app.getAppController3(contents));
     w.setControls(controls);

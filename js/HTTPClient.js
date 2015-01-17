@@ -24,7 +24,7 @@ function viewWebBrowser(id)
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;opacity:0.5;');
     div.setAttribute('id', 'divhttpclient');
     div.innerHTML = app.getAppController();*/
-    var controls = '<input type="button" id="close" value="Close" onclick="closeWebBrowser();" />';
+    var controls = '<input type="button" id="close" value="'+_("Close")+'" onclick="closeWebBrowser();" />';
 
     var w = new UIWindow('divhttpclient','HTTP Client (Browser)',400,400,false,1.0);
     w.setContent(app.getAppController());
@@ -112,22 +112,22 @@ var HTTPClient = function(ifacepos)
         switch (lastCode) 
         {
             case 0:
-                result = "Loading...";
+                result = _("Loading...");
                 break;
             case 404:
-                result = "404 - Not found";
+                result = _("404 - Not found");
                 break;
             case 200:
                 result = lastContent;
                 break;
             case 997:
-                result = "Malformed URL.\n\nUse only 'domain_or_ip/filename.html'.";
+                result = _("Malformed URL.\n\nUse only 'domain_or_ip/filename.html'.");
                 break;
             case 998:
-                result = "DNS client not present.";
+                result = _("DNS client not present.");
                 break;
             case 999:
-                result = "Domain not in local DNS cache. Look up first.\n\nIf you already performed a lookup, the domain does not exist.";
+                result = _("Domain not in local DNS cache. Look up first.\n\nIf you already performed a lookup, the domain does not exist.");
                 break;
         }
         

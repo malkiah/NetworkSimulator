@@ -20,6 +20,26 @@ var UIMenu = function(description, X,Y, fixed)
     var description = description;
     var visible = false;
     var fixed = fixed;
+    var _self = this;
+
+    function init()
+    {
+        uitranslation.addObserver(_self);
+    }
+    
+    this.dispose = function()
+    {
+        uitranslation.deleteObserver(this);
+    };
+
+    this.localeChanged = function()
+    {
+        /*for (var i = 0; i < entries.length; i++)
+        {
+            var span = document.getElementById(entries[i].id);
+            span.innerHTML = _(entries[i].text);
+        }*/
+    };
 
     this.getId = function()
     {
@@ -34,6 +54,7 @@ var UIMenu = function(description, X,Y, fixed)
     this.addEntry = function(img, text, js)
     {
         var data = {};
+        data.id = "entry_" + getNextID();
         data.img = img;
         data.text = text;
         data.js = js;
@@ -62,13 +83,13 @@ var UIMenu = function(description, X,Y, fixed)
         div.setAttribute("id",id);
         div.setAttribute("style","width:200px;background-color:#EEEEEE;border:3px solid white;position:"+ (fixed?"fixed":"absolute") +";top:"+Y+"px;left:"+X+"px;font-size:0.8em;padding:0px 10px 0px;");
 
-        var innerHtml = description + "<hr/>";
+        var innerHtml = "<span style='font-weight:bold'>" + _(description) + "</span><hr/>";
 
         for (var i = 0; i < entries.length; i++)
         {
             innerHtml += "<a href='#' onclick='"+ entries[i].js +"uimanager.menuOptionClicked();'>";
             innerHtml += "<img src='"+ entries[i].img +"' style='max-height:32px;max-width:32px;' />";
-            innerHtml += entries[i].text + "</a><br/>";
+            innerHtml += "<span id='" +entries[i].id+ "'>" + _(entries[i].text) + "</span></a><br/>";
             if (i !== entries.length - 1)
             {
                 innerHtml += "<hr/>"
@@ -87,4 +108,6 @@ var UIMenu = function(description, X,Y, fixed)
         document.body.removeChild(div);
         visible = false;
     };
+
+    init();
 };

@@ -74,7 +74,7 @@ var UITable = function(headers, data, tableid)
         {
             result += '<th>' + headers[i] + '</th>';
         }
-        result += '<th>Controls</th>'
+        result += '<th>'+_("Controls")+'</th>'
         result += '</tr>';
         
         for (var i = 0; i < data.length; i++) 
@@ -88,10 +88,10 @@ var UITable = function(headers, data, tableid)
                 result += '</td>';
             }
             result += '<td>';
-            result += '<img src="img/64/delete.png" title="Delete" alt="Delete" style="width:24px;" onclick="deleteUITableRow(\''+id+'\','+i+')" />';
+            result += '<img src="img/64/delete.png" title="'+_("Delete")+'" alt="'+_("Delete")+'" style="width:24px;" onclick="deleteUITableRow(\''+id+'\','+i+')" />';
             if (editsecondary)
             {
-                result += '<img src="img/64/edit.png" title="Edit" alt="Edit" style="width:24px;" onclick="'+editsecondaryfunc+'(\''+id+'\','+i+')" />';
+                result += '<img src="img/64/edit.png" title="'+_("Edit")+'" alt="'+_("Edit")+'" style="width:24px;" onclick="'+editsecondaryfunc+'(\''+id+'\','+i+')" />';
             }
             result += '</td>';
             result += '</tr>';
@@ -104,7 +104,7 @@ var UITable = function(headers, data, tableid)
             result += '<input type="text" id="'+inputid+'" />';
             result += '</td>';
         }
-        result += '<td><img src="img/64/add.png" title="Add" alt="Add" style="width:24px;" onclick="addUITableRow(\''+id+'\')" /></td>';
+        result += '<td><img src="img/64/add.png" title="'+_("Add")+'" alt="'+_("Add")+'" style="width:24px;" onclick="addUITableRow(\''+id+'\')" /></td>';
         result += '</tr>';
 
         document.getElementById(tableid).innerHTML = result;

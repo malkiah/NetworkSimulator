@@ -53,8 +53,8 @@ function createLinkConnectorsDiv(id1, id2)
     html += '</tr>';
     html += '</table>';
     var controls = '<p>\
-  <input type="button" id="upload" value="Save" onclick="saveLinkConnectors(' + id1 + ',' + id2 + ');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelLinkConnectors();" />\
+  <input type="button" id="upload" value="'+_("Save")+'" onclick="saveLinkConnectors(' + id1 + ',' + id2 + ');" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelLinkConnectors();" />\
   </p>';
     /*div.innerHTML = html;
     document.body.appendChild(div);*/

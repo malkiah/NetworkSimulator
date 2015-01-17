@@ -28,9 +28,9 @@ function createDNSLookupDiv(id)
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
     div.setAttribute('id', 'divdnslookup');
     div.innerHTML = app.getAppController();*/
-    var controls = '<input type="button" id="upload" value="Lookup" onclick="requestDNSLookup(' + id + ');" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelDNSLookup();" />';
-    var w = new UIWindow('divdnslookup', 'DNS Lookup', 400, 200, false, 1.0);
+    var controls = '<input type="button" id="upload" value="'+_("Lookup")+'" onclick="requestDNSLookup(' + id + ');" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelDNSLookup();" />';
+    var w = new UIWindow('divdnslookup', 'DNS lookup', 400, 200, false, 1.0);
     w.setContent(app.getAppController());
     w.setControls(controls);
     w.render();
@@ -135,7 +135,7 @@ var DNSClient = function(ifacepos)
     {
         var id = network.getPosForElement(owner);
         var result = "<p> \
-        <label for='dnsclientdomain' >Domain:</label> \
+        <label for='dnsclientdomain' >"+_("Domain:")+"</label> \
         <input type='text' id='dnsclientdomain' /> \
         </p>";
         return result;

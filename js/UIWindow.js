@@ -114,7 +114,7 @@ var UIWindow = function(windowid, title, w, h, scrollable, opacity)
         titlediv = document.createElement("div");
         titlediv.setAttribute('id', windowid + "_title");
         titlediv.setAttribute('style', 'width:100%;height:20px;background-color:blue;color:white;font-weight:bold;-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;');
-        titlediv.innerHTML = title;
+        titlediv.innerHTML = _(title);
         
         contentDiv = document.createElement("div");
         contentDiv.setAttribute('id', contentid);
@@ -130,6 +130,7 @@ var UIWindow = function(windowid, title, w, h, scrollable, opacity)
         window.addEventListener("mousemove", windowMouseMoveEvent, true);
 
         uimanager.addWindow(_self);
+        uitranslation.addObserver(_self);
     }
     
     this.render = function() 
@@ -158,6 +159,7 @@ var UIWindow = function(windowid, title, w, h, scrollable, opacity)
         window.removeEventListener("mousemove", windowMouseMoveEvent);
         uimanager.removeWindow(this);
         removeBodyDiv(windowid);
+        uitranslation.removeObserver(this);
     };
 
     this.getId = function()
@@ -175,6 +177,11 @@ var UIWindow = function(windowid, title, w, h, scrollable, opacity)
         x = nx;
         y = ny;
         outerdiv.setAttribute('style', getOuterStyle());
+    };
+
+    this.localeChanged = function()
+    {
+        titlediv.innerHTML = _(title);
     };
     
     init();

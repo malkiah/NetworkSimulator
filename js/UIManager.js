@@ -71,11 +71,11 @@ function createUploadDiv()
     div.setAttribute('id', 'divupload');*/
     var innerHTML = '<p><input type="file" id="uploaddata" name="uploaddata" /></p>';
     var controls = '<p>\
-  <input type="button" id="upload" value="Upload" onclick="confirmUpload();" />\
-  <input type="button" id="cancel" value="Cancel" onclick="cancelUpload();" />\
+  <input type="button" id="upload" value="'+_("Upload")+'" onclick="confirmUpload();" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelUpload();" />\
   </p>';
     //document.body.appendChild(div);
-    var w = new UIWindow('divupload', 'Upload file', 400, 150, false, 1.0);
+    var w = new UIWindow('divupload', _('Upload file'), 400, 150, false, 1.0);
     w.setContent(innerHTML);
     w.setControls(controls);
     w.render();
@@ -152,15 +152,16 @@ var UIManager = function()
         canvas.addEventListener("mousemove", mouseMoveEvent, false);
         var bbox = canvas.getBoundingClientRect();
         
-        mainmenu = new UIMenu("<strong>Main menu</strong>", 42 + bbox.left, 3, true);
-        mainmenu.addEntry("img/64/upload.png", "Upload", 'uploadClick();');
-        mainmenu.addEntry("img/64/save.png", "Save", 'saveNetwork();');
-        mainmenu.addEntry("img/64/computer.png", "Add Host", 'newElement("host");');
-        mainmenu.addEntry("img/64/server_dhcp.png", "Add DHCP server", 'newElement("dhcp");');
-        mainmenu.addEntry("img/64/server_dns.png", "Add DNS server", 'newElement("dns");');
-        mainmenu.addEntry("img/64/server_web.png", "Add web server", 'newElement("web");');
-        mainmenu.addEntry("img/64/switch.png", "Add switch", 'newElement("switch");');
-        mainmenu.addEntry("img/64/router2.png", "Add router", 'newElement("router");');
+        mainmenu = new UIMenu("Main menu", 42 + bbox.left, 3, true);
+        mainmenu.addEntry("img/64/upload.png", _("Upload"), 'uploadClick();');
+        mainmenu.addEntry("img/64/save.png", _("Save"), 'saveNetwork();');
+        mainmenu.addEntry("img/64/computer.png", _("Add Host"), 'newElement("host");');
+        mainmenu.addEntry("img/64/server_dhcp.png", _("Add DHCP server"), 'newElement("dhcp");');
+        mainmenu.addEntry("img/64/server_dns.png", _("Add DNS server"), 'newElement("dns");');
+        mainmenu.addEntry("img/64/server_web.png", _("Add web server"), 'newElement("web");');
+        mainmenu.addEntry("img/64/switch.png", _("Add switch"), 'newElement("switch");');
+        mainmenu.addEntry("img/64/router2.png", _("Add router"), 'newElement("router");');
+        mainmenu.addEntry("img/64/i18n.png", _("Select language"), 'createLocaleDiv();');
         _self.addMenu(mainmenu);
         
         var rect = new UIRectangle(switchMainMenu, null, mainmenu, 5, 5, 35, 50, 10, true);
@@ -715,6 +716,7 @@ var UIManager = function()
     
     this.deleteMenu = function(menu) 
     {
+        menus[menu.getId()].dispose();
         delete menus[menu.getId()];
     };
     

@@ -8,7 +8,7 @@ module.exports = function(grunt){
 	  },
 	  my_target: {
 	    files: {
-	      'dist/networksim.min.js': ['js/*.js']
+	      'dist/networksim.min.js': ['js/**/*.js']
 	    }
 	  }
 	}
