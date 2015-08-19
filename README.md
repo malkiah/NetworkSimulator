@@ -1,7 +1,7 @@
 # NetworkSimulator
 Educational Network Simulator Project
 
-Check out the projects webpage at: http://projects.bardok.net/educational-network-simulator/
+Check out the project's webpage at: http://projects.bardok.net/educational-network-simulator/
 
 (c) 2015 Jorge García Ochoa de Aspuru
 
