@@ -1,22 +1,22 @@
  /*
- * This file is part of the Education Network Simulator project and covered 
+ * This file is part of the Education Network Simulator project and covered
  * by GPLv3 license. See full terms in the LICENSE file at the root folder
  * or at http://www.gnu.org/licenses/gpl-3.0.html.
- * 
+ *
  * (c) 2015 Jorge García Ochoa de Aspuru
  * bardok@gmail.com
- * 
- * Images are copyrighted by their respective authors and have been 
+ *
+ * Images are copyrighted by their respective authors and have been
  * downloaded from http://pixabay.com/
- * 
+ *
  */
 
-function createLinkAction() 
+function createLinkAction()
 {
     uimanager.createLinkAction();
 }
 
-function createBkDiv() 
+function createBkDiv()
 {
     var div = document.createElement("div");
     var w = document.body.scrollWidth;
@@ -26,7 +26,7 @@ function createBkDiv()
     document.body.appendChild(div);
 }
 
-function saveNetwork() 
+function saveNetwork()
 {
     var download = document.createElement("a");
     download.setAttribute('href', 'data:text/plain;charset:utf-8,' + encodeURIComponent(network.save()));
@@ -36,19 +36,19 @@ function saveNetwork()
     document.body.removeChild(download);
 }
 
-function removeBodyDiv(name) 
+function removeBodyDiv(name)
 {
     var div = document.getElementById(name);
     document.body.removeChild(div);
 }
 
-function cancelUpload() 
+function cancelUpload()
 {
     uimanager.getWindow("divupload").dispose();
     removeBodyDiv('divbk');
 }
 
-function confirmUpload() 
+function confirmUpload()
 {
     var fileinput = document.getElementById('uploaddata');
     var file = fileinput.files[0];
@@ -62,7 +62,7 @@ function confirmUpload()
     removeBodyDiv('divbk');
 }
 
-function createUploadDiv() 
+function createUploadDiv()
 {
     var div = document.createElement("div");
     /*var l = window.innerWidth / 2 - 200;
@@ -81,7 +81,7 @@ function createUploadDiv()
     w.render();
 }
 
-function uploadClick() 
+function uploadClick()
 {
     createBkDiv();
     createUploadDiv();
@@ -99,7 +99,7 @@ function uploadClick()
  - El clickable del menú del seleccionado tiene como objeto el propio menú, para detectar el tipo
  - Seleccionar y poder eliminar links
 */
-var UIManager = function() 
+var UIManager = function()
 {
     var STATE_NEUTRAL = 0; // Nada seleccionado, ningún menú visible
     var STATE_ELEMENT_SELECTED_MOUSE_DOWN = 1; //  Un elemento seleccionado, ningún menú visible, no hemos soltado el botón
@@ -110,7 +110,7 @@ var UIManager = function()
     var STATE_MAIN_MENU_VISIBLE = 6; // Nada seleccionado, menú principal visible
     var STATE_ELEMENT_MENU_VISIBLE = 7; // Un elemento seleccionado, su menú visible
     var STATE_LINE_MENU_VISIBLE = 8; // Un enlace seleccionado, su menú visible
-    
+
     var ACTION_MOUSE_DOWN = 0;
     var ACTION_MOUSE_UP = 1;
     var ACTION_MOUSE_MOVE = 2;
@@ -118,7 +118,7 @@ var UIManager = function()
     var ACTION_SELECTED_ELEMENT_DELETED = 4;
     var ACTION_SELECTED_LINE_DELETED = 5;
     var ACTION_CREATE_LINK = 6;
-    
+
     var menus = [];
     var clickables = [];
     var windows = [];
@@ -131,27 +131,27 @@ var UIManager = function()
     var elemRect = null;
     var move_X = 0;
     var move_Y = 0;
-    
-    function switchMainMenu(params) 
+
+    function switchMainMenu(params)
     {
-        if (mainmenu.getVisible()) 
+        if (mainmenu.getVisible())
         {
             mainmenu.hide();
-        } 
-        else 
+        }
+        else
         {
             mainmenu.show();
         }
     }
-    
-    function init() 
+
+    function init()
     {
         var canvas = document.getElementById("simcanvas");
         canvas.addEventListener("mousedown", mouseDownEvent, false);
         canvas.addEventListener("mouseup", mouseUpEvent, false);
         canvas.addEventListener("mousemove", mouseMoveEvent, false);
         var bbox = canvas.getBoundingClientRect();
-        
+
         mainmenu = new UIMenu("Main menu", 42 + bbox.left, 3, true);
         mainmenu.addEntry("img/64/upload.png", _("Upload"), 'uploadClick();');
         mainmenu.addEntry("img/64/save.png", _("Save"), 'saveNetwork();');
@@ -163,56 +163,56 @@ var UIManager = function()
         mainmenu.addEntry("img/64/router2.png", _("Add router"), 'newElement("router");');
         mainmenu.addEntry("img/64/i18n.png", _("Select language"), 'createLocaleDiv();');
         _self.addMenu(mainmenu);
-        
+
         var rect = new UIRectangle(switchMainMenu, null, mainmenu, 5, 5, 35, 50, 10, true);
         _self.addClickable(rect);
     }
-    
-    this.addWindow = function(w) 
+
+    this.addWindow = function(w)
     {
         windows[w.getId()] = w;
     };
-    
-    this.getWindow = function(id) 
+
+    this.getWindow = function(id)
     {
         return windows[id];
     };
-    
-    this.removeWindow = function(w) 
+
+    this.removeWindow = function(w)
     {
         delete windows[w.getId()];
     };
-    
-    this.reset = function() 
+
+    this.reset = function()
     {
         this.clickables = [];
         var rect = new UIRectangle(switchMainMenu, null, mainmenu, 5, 5, 35, 50, 10, true);
         this.addClickable(rect);
     };
-    
-    function mouseDownEvent(event) 
+
+    function mouseDownEvent(event)
     {
         var canvas = document.getElementById("simcanvas");
         // THANK_YOU: http://www.informit.com/articles/article.aspx?p=1903884&seqNum=6
         var bbox = canvas.getBoundingClientRect();
         var canvas_x = event.clientX - bbox.left * (canvas.width / bbox.width);
         var canvas_y = event.clientY - bbox.top * (canvas.height / bbox.height);
-        
+
         dispatchEvent(canvas_x, canvas_y, ACTION_MOUSE_DOWN);
     }
-    
-    function mouseUpEvent(event) 
+
+    function mouseUpEvent(event)
     {
         var canvas = document.getElementById("simcanvas");
         // THANK_YOU: http://www.informit.com/articles/article.aspx?p=1903884&seqNum=6
         var bbox = canvas.getBoundingClientRect();
         var canvas_x = event.clientX - bbox.left * (canvas.width / bbox.width);
         var canvas_y = event.clientY - bbox.top * (canvas.height / bbox.height);
-        
+
         dispatchEvent(canvas_x, canvas_y, ACTION_MOUSE_UP);
     }
-    
-    function mouseMoveEvent(event) 
+
+    function mouseMoveEvent(event)
     {
         var canvas = document.getElementById("simcanvas");
         // THANK_YOU: http://www.informit.com/articles/article.aspx?p=1903884&seqNum=6
@@ -221,42 +221,42 @@ var UIManager = function()
         var canvas_y = event.clientY - bbox.top * (canvas.height / bbox.height);
         move_X = canvas_x;
         move_Y = canvas_y;
-        
+
         dispatchEvent(canvas_x, canvas_y, ACTION_MOUSE_MOVE);
     }
-    
-    function hideAllMenus() 
+
+    function hideAllMenus()
     {
-        
-        for (var id in menus) 
+
+        for (var id in menus)
         {
-            if (menus[id].getVisible()) 
+            if (menus[id].getVisible())
             {
                 menus[id].hide();
             }
         }
     }
-    
-    function updateOffsets(drawable, X, Y) 
+
+    function updateOffsets(drawable, X, Y)
     {
         var rect = drawable.getRect();
         click_offset_x = X - rect.x;
         click_offset_y = Y - rect.y;
     }
-    
-    function switchSelectedMenu(menu) 
+
+    function switchSelectedMenu(menu)
     {
-        if (menu.getVisible()) 
+        if (menu.getVisible())
         {
             menu.hide();
-        } 
-        else 
+        }
+        else
         {
             menu.show();
         }
     }
-    
-    function selectElement(e) 
+
+    function selectElement(e)
     {
         network.setSelected(e);
         e.getDrawable().addObserver(_self);
@@ -265,8 +265,8 @@ var UIManager = function()
         elemRect = new UIRectangle(switchSelectedMenu, e.getMenu(), _self, rect.x + rect.width - 10, rect.y, 10, 10, 50);
         _self.addClickable(elemRect);
     }
-    
-    function selectLink(l) 
+
+    function selectLink(l)
     {
         network.setSelected(l);
         var vertices = l.getCenter();
@@ -274,21 +274,21 @@ var UIManager = function()
         l.getMenu().setPos(vertices.x + 5, vertices.y - 5);
         _self.addClickable(elemRect);
     }
-    
-    this.drawableChanged = function() 
+
+    this.drawableChanged = function()
     {
-        if (network.getSelected() !== null) 
+        if (network.getSelected() !== null)
         {
             var rect = network.getSelected().getDrawable().getRect();
-            
+
             elemRect.X = rect.x + rect.width - 10;
             elemRect.Y = rect.y;
         }
     };
-    
-    function unselectElement(e) 
+
+    function unselectElement(e)
     {
-        if ((e !== null) && (e.getMenu().getVisible())) 
+        if ((e !== null) && (e.getMenu().getVisible()))
         {
             e.getMenu().hide();
             e.getDrawable().deleteObserver(_self);
@@ -296,29 +296,29 @@ var UIManager = function()
         _self.removeClickable(elemRect);
         network.setSelected(null);
     }
-    
-    function unselectLine(e) 
+
+    function unselectLine(e)
     {
-        /*if ((e !== null) && (e.getMenu().getVisible())) 
+        /*if ((e !== null) && (e.getMenu().getVisible()))
         {
             e.getMenu().hide();
             e.getDrawable().deleteObserver(_self);
         }*/
         network.setSelected(null);
     }
-    
-    function dispatchEvent(X, Y, action) 
+
+    function dispatchEvent(X, Y, action)
     {
-        switch (state) 
+        switch (state)
         {
             case STATE_NEUTRAL:
-                switch (action) 
+                switch (action)
                 {
                     case ACTION_MOUSE_DOWN:
                         var clicked = detectClick(X, Y);
-                        if (clicked !== null) 
+                        if (clicked !== null)
                         {
-                            if (clicked.getObject() === mainmenu) 
+                            if (clicked.getObject() === mainmenu)
                             {
                                 // Ocultar todos los demás menús
                                 hideAllMenus();
@@ -326,8 +326,8 @@ var UIManager = function()
                                 clicked.performAction();
                                 // Nuevo estado
                                 state = STATE_MAIN_MENU_VISIBLE;
-                            } 
-                            else if (clicked.getObject() instanceof Drawable) 
+                            }
+                            else if (clicked.getObject() instanceof Drawable)
                             {
                                 // Actualizar los offsets para mover el objeto
                                 updateOffsets(clicked.getObject(), X, Y);
@@ -337,8 +337,8 @@ var UIManager = function()
                                 selectElement(clicked.getObject().getOwner());
                                 // Nuevo estado
                                 state = STATE_ELEMENT_SELECTED_MOUSE_DOWN;
-                            } 
-                            else if (clicked.getObject() instanceof Link) 
+                            }
+                            else if (clicked.getObject() instanceof Link)
                             {
                                 // Ocultar los menus
                                 hideAllMenus();
@@ -350,20 +350,20 @@ var UIManager = function()
                 }
                 break;
             case STATE_MAIN_MENU_VISIBLE:
-                switch (action) 
+                switch (action)
                 {
                     case ACTION_MOUSE_DOWN:
                         var clicked = detectClick(X, Y);
-                        if (clicked !== null) 
+                        if (clicked !== null)
                         {
-                            if (clicked.getObject() === mainmenu) 
+                            if (clicked.getObject() === mainmenu)
                             {
                                 // Main menu oculto
                                 clicked.performAction();
                                 // Nuevo estado
                                 state = STATE_NEUTRAL;
-                            } 
-                            else if (clicked.getObject() instanceof Drawable) 
+                            }
+                            else if (clicked.getObject() instanceof Drawable)
                             {
                                 // Actualizar los offsets para mover el objeto
                                 updateOffsets(clicked.getObject(), X, Y);
@@ -373,16 +373,16 @@ var UIManager = function()
                                 selectElement(clicked.getObject().getOwner());
                                 // Nuevo estado
                                 state = STATE_ELEMENT_SELECTED_MOUSE_DOWN;
-                            } 
-                            else if (clicked.getObject() instanceof Link) 
+                            }
+                            else if (clicked.getObject() instanceof Link)
                             {
                                 // Ocultar los menus
                                 hideAllMenus();
                                 selectLink(clicked.getObject());
                                 state = STATE_LINE_SELECTED;
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             // Main menu oculto
                             mainmenu.hide();
@@ -399,7 +399,7 @@ var UIManager = function()
                 }
                 break;
             case STATE_ELEMENT_SELECTED_MOUSE_DOWN:
-                switch (action) 
+                switch (action)
                 {
                     case ACTION_MOUSE_UP:
                         state = STATE_ELEMENT_SELECTED_MOUSE_UP;
@@ -410,13 +410,13 @@ var UIManager = function()
                 }
                 break;
             case STATE_ELEMENT_SELECTED_MOUSE_UP:
-                switch (action) 
+                switch (action)
                 {
                     case ACTION_MOUSE_DOWN:
                         var clicked = detectClick(X, Y);
-                        if (clicked !== null) 
+                        if (clicked !== null)
                         {
-                            if (clicked.getObject() === mainmenu) 
+                            if (clicked.getObject() === mainmenu)
                             {
                                 // Ocultar todos los demás menús
                                 hideAllMenus();
@@ -426,8 +426,8 @@ var UIManager = function()
                                 network.setSelected(null);
                                 // Nuevo estado
                                 state = STATE_MAIN_MENU_VISIBLE;
-                            } 
-                            else if (clicked.getObject() instanceof Drawable) 
+                            }
+                            else if (clicked.getObject() instanceof Drawable)
                             {
                                 // Ocultar todos los menús
                                 hideAllMenus();
@@ -436,22 +436,22 @@ var UIManager = function()
                                 selectElement(clicked.getObject().getOwner());
                                 // Nuevo estado
                                 state = STATE_ELEMENT_SELECTED_MOUSE_DOWN;
-                            } 
-                            else if (clicked.getObject() instanceof UIManager) 
+                            }
+                            else if (clicked.getObject() instanceof UIManager)
                             {
                                 clicked.performAction();
                                 // Nuevo estado
                                 state = STATE_ELEMENT_MENU_VISIBLE;
-                            } 
-                            else if (clicked.getObject() instanceof Link) 
+                            }
+                            else if (clicked.getObject() instanceof Link)
                             {
                                 // Ocultar los menus
                                 hideAllMenus();
                                 selectLink(clicked.getObject());
                                 state = STATE_LINE_SELECTED;
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             // Nada seleccionado
                             network.setSelected(null);
@@ -462,13 +462,13 @@ var UIManager = function()
                 }
                 break;
             case STATE_LINE_SELECTED:
-                switch (action) 
+                switch (action)
                 {
                     case ACTION_MOUSE_DOWN:
                         var clicked = detectClick(X, Y);
-                        if (clicked !== null) 
+                        if (clicked !== null)
                         {
-                            if (clicked.getObject() === mainmenu) 
+                            if (clicked.getObject() === mainmenu)
                             {
                                 // Ocultar todos los demás menús
                                 hideAllMenus();
@@ -478,8 +478,8 @@ var UIManager = function()
                                 network.setSelected(null);
                                 // Nuevo estado
                                 state = STATE_MAIN_MENU_VISIBLE;
-                            } 
-                            else if (clicked.getObject() instanceof Drawable) 
+                            }
+                            else if (clicked.getObject() instanceof Drawable)
                             {
                                 // Ocultar todos los menús
                                 hideAllMenus();
@@ -488,22 +488,22 @@ var UIManager = function()
                                 selectElement(clicked.getObject().getOwner());
                                 // Nuevo estado
                                 state = STATE_ELEMENT_SELECTED_MOUSE_DOWN;
-                            } 
-                            else if (clicked.getObject() instanceof UIManager) 
+                            }
+                            else if (clicked.getObject() instanceof UIManager)
                             {
                                 clicked.performAction();
                                 // Nuevo estado
                                 state = STATE_LINE_MENU_VISIBLE;
-                            } 
-                            else if (clicked.getObject() instanceof Link) 
+                            }
+                            else if (clicked.getObject() instanceof Link)
                             {
                                 // Ocultar los menus
                                 hideAllMenus();
                                 selectLink(clicked.getObject());
                                 state = STATE_LINE_SELECTED;
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             // Nada seleccionado
                             network.setSelected(null);
@@ -514,13 +514,13 @@ var UIManager = function()
                 }
                 break;
             case STATE_LINE_MENU_VISIBLE:
-                switch (action) 
+                switch (action)
                 {
                     case ACTION_MOUSE_DOWN:
                         var clicked = detectClick(X, Y);
-                        if (clicked !== null) 
+                        if (clicked !== null)
                         {
-                            if (clicked.getObject() === mainmenu) 
+                            if (clicked.getObject() === mainmenu)
                             {
                                 // Ocultar todos los demás menús
                                 hideAllMenus();
@@ -530,8 +530,8 @@ var UIManager = function()
                                 network.setSelected(null);
                                 // Nuevo estado
                                 state = STATE_MAIN_MENU_VISIBLE;
-                            } 
-                            else if (clicked.getObject() instanceof Drawable) 
+                            }
+                            else if (clicked.getObject() instanceof Drawable)
                             {
                                 // Ocultar todos los menús
                                 hideAllMenus();
@@ -540,22 +540,22 @@ var UIManager = function()
                                 selectElement(clicked.getObject().getOwner());
                                 // Nuevo estado
                                 state = STATE_ELEMENT_SELECTED_MOUSE_DOWN;
-                            } 
-                            else if (clicked.getObject() instanceof UIManager) 
+                            }
+                            else if (clicked.getObject() instanceof UIManager)
                             {
                                 clicked.performAction();
                                 // Nuevo estado
                                 state = STATE_LINE_SELECTED;
-                            } 
-                            else if (clicked.getObject() instanceof Link) 
+                            }
+                            else if (clicked.getObject() instanceof Link)
                             {
                                 // Ocultar los menus
                                 hideAllMenus();
                                 selectLink(clicked.getObject());
                                 state = STATE_LINE_SELECTED;
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             hideAllMenus();
                             // Nada seleccionado
@@ -574,13 +574,13 @@ var UIManager = function()
                 }
                 break;
             case STATE_ELEMENT_MENU_VISIBLE:
-                switch (action) 
+                switch (action)
                 {
                     case ACTION_MOUSE_DOWN:
                         var clicked = detectClick(X, Y);
-                        if (clicked !== null) 
+                        if (clicked !== null)
                         {
-                            if (clicked.getObject() === mainmenu) 
+                            if (clicked.getObject() === mainmenu)
                             {
                                 // Ocultar todos los demás menús
                                 hideAllMenus();
@@ -590,8 +590,8 @@ var UIManager = function()
                                 network.setSelected(null);
                                 // Nuevo estado
                                 state = STATE_MAIN_MENU_VISIBLE;
-                            } 
-                            else if (clicked.getObject() instanceof Drawable) 
+                            }
+                            else if (clicked.getObject() instanceof Drawable)
                             {
                                 // Ocultar todos los menús
                                 hideAllMenus();
@@ -600,22 +600,22 @@ var UIManager = function()
                                 selectElement(clicked.getObject().getOwner());
                                 // Nuevo estado
                                 state = STATE_ELEMENT_SELECTED_MOUSE_DOWN;
-                            } 
-                            else if (clicked.getObject() instanceof UIManager) 
+                            }
+                            else if (clicked.getObject() instanceof UIManager)
                             {
                                 clicked.performAction();
                                 // Nuevo estado
                                 state = STATE_ELEMENT_MENU_VISIBLE;
-                            } 
-                            else if (clicked.getObject() instanceof Link) 
+                            }
+                            else if (clicked.getObject() instanceof Link)
                             {
                                 // Ocultar los menus
                                 hideAllMenus();
                                 selectLink(clicked.getObject());
                                 state = STATE_LINE_SELECTED;
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             unselectElement(network.getSelected());
                             // Main menu oculto
@@ -644,13 +644,13 @@ var UIManager = function()
                 }
                 break;
             case STATE_CREATING_LINK:
-                switch (action) 
+                switch (action)
                 {
                     case ACTION_MOUSE_DOWN:
                         var clicked = detectClick(X, Y);
-                        if (clicked !== null) 
+                        if (clicked !== null)
                         {
-                            if (clicked.getObject() instanceof Drawable) 
+                            if (clicked.getObject() instanceof Drawable)
                             {
                                 // Ocultar todos los menús
                                 hideAllMenus();
@@ -658,8 +658,8 @@ var UIManager = function()
                                 selectLinkConnectors(network.getSelected().id, clicked.getObject().getOwner().id);
                                 state = STATE_ELEMENT_SELECTED_MOUSE_UP;
                             }
-                        } 
-                        else 
+                        }
+                        else
                         {
                             hideAllMenus();
                             // Nuevo estado
@@ -670,73 +670,73 @@ var UIManager = function()
                 break;
         }
     }
-    
-    this.menuOptionClicked = function() 
+
+    this.menuOptionClicked = function()
     {
         dispatchEvent(-1, -1, ACTION_MENU_OPTION_CLICKED);
     };
-    
-    this.selectedElementDeleted = function() 
+
+    this.selectedElementDeleted = function()
     {
         dispatchEvent(-1, -1, ACTION_SELECTED_ELEMENT_DELETED);
     };
-    
-    this.selectedLineDeleted = function() 
+
+    this.selectedLineDeleted = function()
     {
         dispatchEvent(-1, -1, ACTION_SELECTED_LINE_DELETED);
     };
-    
-    this.createLinkAction = function() 
+
+    this.createLinkAction = function()
     {
         dispatchEvent(-1, -1, ACTION_CREATE_LINK);
     };
-    
-    function detectClick(X, Y) 
+
+    function detectClick(X, Y)
     {
         var clicked = null;
-        
-        for (var i = 0; i < clickables.length; i++) 
+
+        for (var i = 0; i < clickables.length; i++)
         {
-            if (clickables[i].isInCoords(X, Y)) 
+            if (clickables[i].isInCoords(X, Y))
             {
-                if ((clicked === null) || (clickables[i].Z > clicked.Z)) 
+                if ((clicked === null) || (clickables[i].Z > clicked.Z))
                 {
                     clicked = clickables[i];
                 }
             }
         }
-        
+
         return clicked;
     }
-    
-    this.addMenu = function(menu) 
+
+    this.addMenu = function(menu)
     {
         menus[menu.getId()] = menu;
     };
-    
-    this.deleteMenu = function(menu) 
+
+    this.deleteMenu = function(menu)
     {
         menus[menu.getId()].dispose();
         delete menus[menu.getId()];
     };
-    
-    this.getMenu = function(id) 
+
+    this.getMenu = function(id)
     {
         return menus[id];
     };
-    
-    this.addClickable = function(c) 
+
+    this.addClickable = function(c)
     {
         clickables.push(c);
     };
-    
-    this.removeClickable = function(c) 
+
+    this.removeClickable = function(c)
     {
         var index = clickables.indexOf(c);
         clickables.splice(index, 1);
     };
-    
-    function renderMainMenu(ctx) 
+
+    function renderMainMenu(ctx)
     {
         ctx.fillStyle = "rgba(255,255,255,0.5)";
         ctx.fillRect(5, document.body.scrollTop + 5, 35, 50);
@@ -744,15 +744,15 @@ var UIManager = function()
         ctx.lineWidth = 4;
         ctx.strokeRect(5, document.body.scrollTop + 5, 35, 50);
         ctx.lineWidth = 5;
-        for (var i = 15; i < 50; i += 10) 
+        for (var i = 15; i < 50; i += 10)
         {
             ctx.strokeRect(12, document.body.scrollTop + i, 21, 0);
         }
     }
-    
-    function renderSelected(ctx) 
+
+    function renderSelected(ctx)
     {
-        if ((state === STATE_ELEMENT_SELECTED_MOUSE_DOWN) || (state === STATE_ELEMENT_SELECTED_MOUSE_UP) || (state === STATE_ELEMENT_MENU_VISIBLE) || (state === STATE_CREATING_LINK)) 
+        if ((state === STATE_ELEMENT_SELECTED_MOUSE_DOWN) || (state === STATE_ELEMENT_SELECTED_MOUSE_UP) || (state === STATE_ELEMENT_MENU_VISIBLE) || (state === STATE_CREATING_LINK))
         {
             var rect = network.getSelected().getDrawable().getRect();
             ctx.strokeStyle = "rgba(100,100,100,0.75)";
@@ -763,8 +763,8 @@ var UIManager = function()
             ctx.fillRect(elemRect.X, elemRect.Y, elemRect.W, elemRect.H);
             ctx.lineWidth = 2;
             ctx.strokeRect(elemRect.X, elemRect.Y, elemRect.W, elemRect.H);
-        } 
-        else if ((state === STATE_LINE_SELECTED) || (state === STATE_LINE_MENU_VISIBLE)) 
+        }
+        else if ((state === STATE_LINE_SELECTED) || (state === STATE_LINE_MENU_VISIBLE))
         {
             var pos = network.getSelected().getCenter();
             ctx.fillStyle = "rgba(255,255,255,0.75)";
@@ -774,10 +774,10 @@ var UIManager = function()
             ctx.strokeRect(pos.x - 5, pos.y - 5, 10, 10);
         }
     }
-    
-    function renderCreatingLink(ctx) 
+
+    function renderCreatingLink(ctx)
     {
-        if (state === STATE_CREATING_LINK) 
+        if (state === STATE_CREATING_LINK)
         {
             var rect = network.getSelected().getDrawable().getRect();
             var x1 = rect.x + rect.width / 2;
@@ -788,16 +788,16 @@ var UIManager = function()
             ctx.moveTo(x1, y1);
             ctx.lineTo(move_X, move_Y);
             ctx.stroke();
-        
+
         }
     }
-    
-    this.render = function(ctx) 
+
+    this.render = function(ctx)
     {
         renderSelected(ctx);
         renderCreatingLink(ctx);
         renderMainMenu(ctx);
     };
-    
+
     init();
 };
