@@ -1,0 +1,42 @@
+NAT
+  [puerto externo] puerto interno, ip interna, fijo
+  - recibir:
+    Si hay entrada para el puerto del mensaje, cambiar la IP de destino por la ip interna y el puerto de destino por el puerto interno y reenviar
+    Si no es fijo, borrar la entrada
+  - enviar:
+    Generar un puerto aleatorio, cambiar el puerto del mensaje por el puerto aleatorio y la ip de origen por la ip del conector y añadir una entrada no fija a la tabla
+    Reenviar
+
+tabla ARP
+  mac
+  iface
+
+función getMACforIP del conectable
+  - preguntar a todos los conectores si tienen link.
+  - si lo tienen, preguntar al conector del otro lado "whohasIP"
+  - Si devuelve la mac, guardar en la tabla la entrada
+
+función whohasIP del conector
+  - mirar si es mi IP. Si la es, devuelvo mi MAC
+  - si no, preguntar al conector del otro lado "whohasIP" y devolver
+
+función getDstMAC
+  - Si la IP es de la misma red, pedir la MAC de la IP
+  - Si la IP es de otra red, pedir la MAC del GW
+
+El routing va siempre por dirección HW
+
+findNextConnectorInPath(srcConnector, currentConnectable, dstIP, dstMAC)
+
+- Si la IP de destino no es de la red del srcConnector, le pedimos a srcConnector el GW 
+por el que hay que enviarlo y cambiamos la IP
+
+En router, al recibir un mensaje
+- Si no es para el router, ni es broadcast, buscamos el GW por el que enviarlo
+  - Creamos un nuevo puerto vacío en el router como nuevo puerto de origen del mensaje
+  - En la aplicación NAT añadimos una entrada con el nuevo puerto, y los datos del antiguo y la ip original
+  - Añadimos una entrada NAT volátil con el nuevo puerto y la app NAT
+  - Cambiamos la IP de origen por la de la interfaz del GW por la que se envía y el puerto por el nuevo
+  - Se envía por esa interfaz
+- Si es para el router
+  - se encarga la app del NAT
