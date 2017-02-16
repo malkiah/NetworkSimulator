@@ -1,0 +1,7 @@
+Prepare (Ubuntu):
+$ sudo apt-get install npm nodejs-legacy
+$ sudo npm install -g grunt
+$ sudo npm install -g grunt-cli
+
+Uglify:
+$ grunt

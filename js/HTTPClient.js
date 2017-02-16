@@ -1,26 +1,26 @@
 /*
- * This file is part of the Education Network Simulator project and covered 
+ * This file is part of the Education Network Simulator project and covered
  * by GPLv3 license. See full terms in the LICENSE file at the root folder
  * or at http://www.gnu.org/licenses/gpl-3.0.html.
- * 
+ *
  * (c) 2015 Jorge García Ochoa de Aspuru
  * bardok@gmail.com
- * 
- * Images are copyrighted by their respective authors and have been 
+ *
+ * Images are copyrighted by their respective authors and have been
  * downloaded from http://pixabay.com/
- * 
+ *
  */
 
-function viewWebBrowser(id) 
+function viewWebBrowser(id)
 {
     createBkDiv();
-    
+
     var host = network.getElement(id);
     var app = host.getApp("HTTPClient");
     /*var div = document.createElement("div");
     var l = window.innerWidth / 2 - 200;
     var t = window.innerHeight / 2 - 200;
-    
+
     div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:400px;border-radius:10px;border:1px solid;padding:10px;text-align:center;opacity:0.5;');
     div.setAttribute('id', 'divhttpclient');
     div.innerHTML = app.getAppController();*/
@@ -32,13 +32,13 @@ function viewWebBrowser(id)
     w.render();
 }
 
-function closeWebBrowser() 
+function closeWebBrowser()
 {
     removeBodyDiv('divbk');
     uimanager.getWindow("divhttpclient").dispose();
 }
 
-function requestHTTPWebSite(id) 
+function requestHTTPWebSite(id)
 {
     var host = network.getElement(id);
     var app = host.getApp("HTTPClient");
@@ -46,7 +46,7 @@ function requestHTTPWebSite(id)
     app.requestHTTPWebSite(url);
 }
 
-var HTTPClient = function(ifacepos) 
+var HTTPClient = function(ifacepos)
 {
     var owner = null;
     var ifacepos = ifacepos;
@@ -54,62 +54,62 @@ var HTTPClient = function(ifacepos)
     var lastContent = null;
     var lastURL = null;
     var _self = this;
-    
-    this.save = function() 
+
+    this.save = function()
     {
         var result = {};
         result.version = 1;
         result.id = this.getId();
         result.ifacepos = ifacepos;
-        
+
         return result;
     };
-    
-    this.load = function(data) 
+
+    this.load = function(data)
     {
     };
-    
-    this.setOwner = function(c_owner) 
+
+    this.setOwner = function(c_owner)
     {
         owner = c_owner;
     };
-    
-    this.getOwner = function() 
+
+    this.getOwner = function()
     {
         return owner;
     };
-    
-    this.getIfacepos = function() 
+
+    this.getIfacepos = function()
     {
         return ifacepos;
     };
-    
-    this.getId = function() 
+
+    this.getId = function()
     {
         return "HTTPClient";
     };
-    
-    this.resetHTTPServerInfo = function() 
+
+    this.resetHTTPServerInfo = function()
     {
         domains = [];
     };
-    
-    this.getMenuEntries = function() 
+
+    this.getMenuEntries = function()
     {
         var data = [];
-        
+
         data[0] = {};
         data[0].img = 'img/64/envelope-HTTP.png';
         data[0].text = 'Web browser (HTTP client)';
         data[0].js = 'viewWebBrowser(' + owner.id + ');';
-        
+
         return data;
     };
-    
-    this.getBrowserContents = function() 
+
+    this.getBrowserContents = function()
     {
         var result = "";
-        switch (lastCode) 
+        switch (lastCode)
         {
             case 0:
                 result = _("Loading...");
@@ -130,22 +130,22 @@ var HTTPClient = function(ifacepos)
                 result = _("Domain not in local DNS cache. Look up first.\n\nIf you already performed a lookup, the domain does not exist.");
                 break;
         }
-        
+
         result = result.replace(/\n/g, '<br/>');
-        
+
         return result;
     };
-    
-    function updateBrowser() 
+
+    function updateBrowser()
     {
         var browsercontents = document.getElementById("httpbrowsercontents");
-        if (browsercontents !== null) 
+        if (browsercontents !== null)
         {
             browsercontents.innerHTML = _self.getBrowserContents();
         }
     }
-    
-    this.getAppController = function() 
+
+    this.getAppController = function()
     {
         result = "<p>";
         result += "<input type='text' id='httpclienturl' style='width:80%;' value='"+((lastURL !== null)?lastURL:"")+"' /> ";
@@ -158,13 +158,16 @@ var HTTPClient = function(ifacepos)
         result += "</div>";
         return result;
     };
-    
-    function performHTTPRequest(domain, ip, filename) 
+
+    function performHTTPRequest(domain, ip, filename)
     {
+      // Tenemos IP?
+      if (owner.getConnectable().getIPInfo(ifacepos).getIPv4() !== null)
+      {
         lastCode = 0;
         updateBrowser();
         var MAC = owner.getConnectable().getDstMAC(ip);
-        if (MAC !== null) 
+        if (MAC !== null)
         {
             var data = {};
             data.domain = domain;
@@ -173,64 +176,65 @@ var HTTPClient = function(ifacepos)
             data.description = "GET: " + filename;
             var message = new Message(
             "tcp",
-            owner.getConnectable().getIPInfo(ifacepos).getIPv4(), 
-            ip, 
-            owner.getConnectable().getMAC(ifacepos), 
-            MAC, 
-            getDinamycPort(), 
-            80, 
+            owner.getConnectable().getIPInfo(ifacepos).getIPv4(),
+            ip,
+            owner.getConnectable().getMAC(ifacepos),
+            MAC,
+            getDinamycPort(),
+            80,
             data, images[IMAGE_ENVELOPEHTTP]
             );
             owner.getConnectable().getTrafficManager().registerApplication(_self, message.getOrigPort(), false);
             owner.getConnectable().getConnector(ifacepos).send(message);
         }
+      }
     }
-    
-    this.requestHTTPWebSite = function(url) 
+
+    this.requestHTTPWebSite = function(url)
     {
         var url = document.getElementById("httpclienturl").value;
         lastURL = url;
         var urlparts = url.split("/", 2);
-        if (urlparts.length === 2) 
+        if (urlparts.length === 2)
         {
             var ip = null;
             var domain = urlparts[0];
-            if (isValidIPv4(domain)) 
+            if (isValidIPv4(domain))
             {
                 ip = urlparts[0];
                 performHTTPRequest(ip, ip, urlparts[1]);
-            } 
-            else 
+            }
+            else
             {
                 var dnsclientapp = owner.getApp("DNSClient");
-                if (dnsclientapp === null) 
+                if (dnsclientapp === null)
                 {
                     lastCode = 998;
                     updateBrowser();
-                } 
-                else 
+                }
+                else
                 {
                     var ip = dnsclientapp.getIp(domain);
-                    if (ip === null) 
+                    if (ip === null)
                     {
                         lastCode = 999;
                         updateBrowser();
-                    } 
-                    else 
+                    }
+                    else
                     {
                         performHTTPRequest(domain, ip, urlparts[1]);
                     }
                 }
             }
-        } 
-        else 
+        }
+        else
         {
             lastCode = 997;
             updateBrowser();
         }
     };
 
-    this.receiveMessage = function(message) 
+    this.receiveMessage = function(message)
     {
         lastCode = message.getData().code;
         lastContent = message.getData().contents;

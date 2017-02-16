@@ -81,7 +81,9 @@ var es_ES ={
     "Sending traceroute to: ":"Enviando traceroute a: ",
     "Sending ping to: ":"Enviando ping a: ",
     "Ping response recieved from ":"Respuesta a ping recibida de ",
-    " - Traceroute to ":" - Traceroute a "
-}; 
+    " - Traceroute to ":" - Traceroute a ",
+    "Network unreachable: ":"Red inaccesible: ",
+    "Network not configured for interface: ":"Red no configurada para la interfaz: "
+};
 
 uitranslation.registerLocale(es_ES);
