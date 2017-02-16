@@ -5,3 +5,12 @@ $ sudo npm install -g grunt-cli
 
 Uglify:
 $ grunt
+
+GIT config:
+$ git config --global user.email "...@..."
+$ git config --global user.name "... ..."
+
+GIT use (commit):
+$ git add .
+$ git commit
+$ git push
