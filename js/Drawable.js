@@ -92,7 +92,11 @@ var Drawable = function(c_owner)
         {
             ctx.fillText(parts[i], 0, image.height + pos);
             pos += 8;
-        }    
+        }
+        if (DEBUG)
+        {
+            ctx.fillText("X: " + X + " - Y: " + Y, 0, image.height + pos);
+        }
     }
     
     this.draw = function(ctx) 

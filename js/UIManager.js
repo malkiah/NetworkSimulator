@@ -195,8 +195,8 @@ var UIManager = function()
         var canvas = document.getElementById("simcanvas");
         // THANK_YOU: http://www.informit.com/articles/article.aspx?p=1903884&seqNum=6
         var bbox = canvas.getBoundingClientRect();
-        var canvas_x = event.clientX - bbox.left * (canvas.width / bbox.width);
-        var canvas_y = event.clientY - bbox.top * (canvas.height / bbox.height);
+        var canvas_x = (event.clientX - bbox.left) * (canvas.width / bbox.width);
+        var canvas_y = (event.clientY - bbox.top) * (canvas.height / bbox.height);
 
         dispatchEvent(canvas_x, canvas_y, ACTION_MOUSE_DOWN);
     }
@@ -206,8 +206,8 @@ var UIManager = function()
         var canvas = document.getElementById("simcanvas");
         // THANK_YOU: http://www.informit.com/articles/article.aspx?p=1903884&seqNum=6
         var bbox = canvas.getBoundingClientRect();
-        var canvas_x = event.clientX - bbox.left * (canvas.width / bbox.width);
-        var canvas_y = event.clientY - bbox.top * (canvas.height / bbox.height);
+        var canvas_x = (event.clientX - bbox.left) * (canvas.width / bbox.width);
+        var canvas_y = (event.clientY - bbox.top) * (canvas.height / bbox.height);
 
         dispatchEvent(canvas_x, canvas_y, ACTION_MOUSE_UP);
     }
@@ -217,8 +217,8 @@ var UIManager = function()
         var canvas = document.getElementById("simcanvas");
         // THANK_YOU: http://www.informit.com/articles/article.aspx?p=1903884&seqNum=6
         var bbox = canvas.getBoundingClientRect();
-        var canvas_x = event.clientX - bbox.left * (canvas.width / bbox.width);
-        var canvas_y = event.clientY - bbox.top * (canvas.height / bbox.height);
+        var canvas_x = (event.clientX - bbox.left) * (canvas.width / bbox.width);
+        var canvas_y = (event.clientY - bbox.top) * (canvas.height / bbox.height);
         move_X = canvas_x;
         move_Y = canvas_y;
 
@@ -797,6 +797,11 @@ var UIManager = function()
         renderSelected(ctx);
         renderCreatingLink(ctx);
         renderMainMenu(ctx);
+    };
+    
+    this.getMousePos = function()
+    {
+        return {X: move_X, Y: move_Y};
     };
 
     init();

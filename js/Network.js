@@ -427,6 +427,13 @@ var Network = function(imgs, context, w, h)
         renderGroups(ctx);
         
         uimanager.render(ctx);
+        
+        if (DEBUG)
+        {
+            ctx.fillStyle = "#000000";
+            var coords = uimanager.getMousePos();
+            ctx.fillText("Mouse coords - X: " + coords.X + " - Y: " + coords.Y, 10, 100);
+        }
     }
     
     this.save = function() 

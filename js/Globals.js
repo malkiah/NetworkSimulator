@@ -35,6 +35,8 @@ var LINE_SELECT_TOLERANCE = 2;
 var ROUTER_WAN = 0;
 var ROUTER_LAN = 1;
 
+var DEBUG = false;
+
 var network = null;
 var images = null;
 var uimanager = null;
