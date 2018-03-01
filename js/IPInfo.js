@@ -104,7 +104,7 @@ var IPInfo = function()
     this.sameNetwork = function(ip) 
     {
         var result = false;
-        if (isValidIPv4(ip)) 
+        if ((IPv4 !== null) && (netmask !== null) && isValidIPv4(ip)) 
         {
             //console.log("Is "+ip+" in my network "+ipIntToString(IPv4)+"?");
             var intip = ipStringToInt(ip);
