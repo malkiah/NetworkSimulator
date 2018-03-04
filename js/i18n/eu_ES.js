@@ -83,7 +83,10 @@ var eu_ES = {
     "Ping response recieved from ":"Ping erantzuna honako helbide honetatik: ",
     " - Traceroute to ":" - Traceroute honako helbide honetara: ",
     "Network unreachable: ":"Sarea eskuraezina: ",
-    "Network not configured for interface: ":"Sarea ez dago konfiguratuta interfaze honetan: "
+    "Network not configured for interface: ":"Sarea ez dago konfiguratuta interfaze honetan: ",
+    "File name:":"Fitxategiaren izena:",
+    "Download":"Deskargatu",
+    "Download file":"Deskargatu fitxategia"
 };
 
 uitranslation.registerLocale(eu_ES);

@@ -28,12 +28,14 @@ function createBkDiv()
 
 function saveNetwork()
 {
+    var filename = document.getElementById('filename').value;
     var download = document.createElement("a");
     download.setAttribute('href', 'data:text/plain;charset:utf-8,' + encodeURIComponent(network.save()));
-    download.setAttribute('download', 'network.json');
+    download.setAttribute('download', filename);
     document.body.appendChild(download);
     download.click();
     document.body.removeChild(download);
+    cancelDownload();
 }
 
 function removeBodyDiv(name)
@@ -45,6 +47,12 @@ function removeBodyDiv(name)
 function cancelUpload()
 {
     uimanager.getWindow("divupload").dispose();
+    removeBodyDiv('divbk');
+}
+
+function cancelDownload()
+{
+    uimanager.getWindow("divdownload").dispose();
     removeBodyDiv('divbk');
 }
 
@@ -65,10 +73,6 @@ function confirmUpload()
 function createUploadDiv()
 {
     var div = document.createElement("div");
-    /*var l = window.innerWidth / 2 - 200;
-    var t = window.innerHeight / 2 - 75;
-    div.setAttribute('style', 'position:absolute;top:' + t + 'px;left:' + l + 'px;z-index:110;background-color:white;width:400px;height:150px;border-radius:10px;border:1px solid;padding:10px;text-align:center;');
-    div.setAttribute('id', 'divupload');*/
     var innerHTML = '<p><input type="file" id="uploaddata" name="uploaddata" /></p>';
     var controls = '<p>\
   <input type="button" id="upload" value="'+_("Upload")+'" onclick="confirmUpload();" />\
@@ -81,24 +85,33 @@ function createUploadDiv()
     w.render();
 }
 
+function createDownloadDiv()
+{
+    var div = document.createElement("div");
+    var innerHTML = '<p><label for="filename">'+_("File name:")+'</label><input type="text" id="filename" name="filename" value="network.json" /></p>';
+    var controls = '<p>\
+  <input type="button" id="upload" value="'+_("Download")+'" onclick="saveNetwork();" />\
+  <input type="button" id="cancel" value="'+_("Cancel")+'" onclick="cancelDownload();" />\
+  </p>';
+    //document.body.appendChild(div);
+    var w = new UIWindow('divdownload', _('Download file'), 400, 150, false, 1.0);
+    w.setContent(innerHTML);
+    w.setControls(controls);
+    w.render();
+}
+
 function uploadClick()
 {
     createBkDiv();
     createUploadDiv();
 }
 
-/**
- Me falta:
- + Host, Router y Switch son todo hosts, que según el tipo configuran el conectable, e indican si permiten o no instalar aplicaciones
- - Cada aplicación proporciona sus entradas de menú
- - Cada elemento tiene su menú, y lo añade al UIManager cuando se crea
- - Cada elemento tiene su menú, y actualiza sus opciones al añadir / quitar aplicaciones
- - Cada elemento tiene su menú, y actualiza su posición al mover su drawable
- - Dibujar el selector de menú del seleccionado y añadirlo a los clickables
- - Cuando se deselecciona algo, quitar de los clickables el selector de menú del seleccionado
- - El clickable del menú del seleccionado tiene como objeto el propio menú, para detectar el tipo
- - Seleccionar y poder eliminar links
-*/
+function downloadClick()
+{
+    createBkDiv();
+    createDownloadDiv();
+}
+
 var UIManager = function()
 {
     var STATE_NEUTRAL = 0; // Nada seleccionado, ningún menú visible
@@ -154,7 +167,7 @@ var UIManager = function()
 
         mainmenu = new UIMenu("Main menu", 42 + bbox.left, 3, true);
         mainmenu.addEntry("img/64/upload.png", _("Upload"), 'uploadClick();');
-        mainmenu.addEntry("img/64/save.png", _("Save"), 'saveNetwork();');
+        mainmenu.addEntry("img/64/save.png", _("Save"), 'downloadClick();');
         mainmenu.addEntry("img/64/computer.png", _("Add Host"), 'newElement("host");');
         mainmenu.addEntry("img/64/server_dhcp.png", _("Add DHCP server"), 'newElement("dhcp");');
         mainmenu.addEntry("img/64/server_dns.png", _("Add DNS server"), 'newElement("dns");');
@@ -299,11 +312,6 @@ var UIManager = function()
 
     function unselectLine(e)
     {
-        /*if ((e !== null) && (e.getMenu().getVisible()))
-        {
-            e.getMenu().hide();
-            e.getDrawable().deleteObserver(_self);
-        }*/
         network.setSelected(null);
     }
 

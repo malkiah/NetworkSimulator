@@ -83,7 +83,10 @@ var es_ES ={
     "Ping response recieved from ":"Respuesta a ping recibida de ",
     " - Traceroute to ":" - Traceroute a ",
     "Network unreachable: ":"Red inaccesible: ",
-    "Network not configured for interface: ":"Red no configurada para la interfaz: "
+    "Network not configured for interface: ":"Red no configurada para la interfaz: ",
+    "File name:":"Nombre del fichero:",
+    "Download":"Descargar",
+    "Download file":"Descargar fichero"
 };
 
 uitranslation.registerLocale(es_ES);
