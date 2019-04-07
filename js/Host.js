@@ -507,6 +507,33 @@ var Host = function(type, ports)
         return type;
     };
     
+    this.getVerboseStr = function(connectable,i)
+    {
+        result = "";
+        
+        result += "Network Mask: " + ((connectable.getIPInfo(i).getNetmask() === null)?"-":connectable.getIPInfo(i).getNetmask());
+        result += "\n";
+        result += "DNS 1: " + ((connectable.getIPInfo(i).getDNS1() === null)?"-":connectable.getIPInfo(i).getDNS1());
+        result += "\n";
+        result += "DNS 2: " + ((connectable.getIPInfo(i).getDNS2() === null)?"-":connectable.getIPInfo(i).getDNS2());
+        if (connectable.getGatewayManager() !== null)
+        {
+            result += "\n";
+            result += connectable.getGatewayManager().getGatewayDescription();
+        }
+        if (apps !== null)
+        {
+            var names = this.getAppNames();
+            for (var i=0;i<names.length;i++)
+            {
+                var app = this.getApp(names[i]);
+                result += app.getAppDescription();
+            }
+        }
+
+        return result;
+    };
+    
     this.getStrInfo = function() 
     {
         result = name;
@@ -519,6 +546,11 @@ var Host = function(type, ports)
                 result += this.getConnectorDesc(i);
                 result += ": ";
                 result += (connectable.getIPInfo(i).getIPv4() === null)?"-":connectable.getIPInfo(i).getIPv4();
+                if (NetworkSimulator.verbose == true)
+                {
+                    result += "\n";
+                    result += this.getVerboseStr(connectable,i);
+                }
             }
         }
         else if (connectable.getIpMode() === IPMODE_SHARED)
@@ -527,6 +559,11 @@ var Host = function(type, ports)
             result += _("IP: ");
             result += ": ";
             result += (connectable.getIPInfo(0).getIPv4() === null)?"-":connectable.getIPInfo(0).getIPv4();
+            if (NetworkSimulator.verbose == true)
+            {
+                result += "\n";
+                result += this.getVerboseStr(connectable,0);
+            }
         }
         
         return result;

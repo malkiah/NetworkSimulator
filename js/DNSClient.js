@@ -155,4 +155,10 @@ var DNSClient = function(ifacepos)
 
         return data;
     };
+    
+    this.getAppDescription = function()
+    {
+        return "";
+    };
+    
 };

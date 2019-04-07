@@ -429,4 +429,9 @@ var HTTPServer = function(ifacepos)
         );
         owner.getConnectable().getConnector(ifacepos).send(response);
     };
+    
+    this.getAppDescription = function()
+    {
+        return "HTTP Server";
+    };
 };

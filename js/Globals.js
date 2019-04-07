@@ -55,5 +55,6 @@ function getNextID()
 }
 
 var NetworkSimulator = {
-  initialdata: null
+  initialdata: null,
+  verbose:false
 };

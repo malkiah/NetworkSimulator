@@ -247,4 +247,15 @@ var DHCPServer = function(ifacepos)
         
         return data;
     };
+    
+    this.getAppDescription = function()
+    {
+        var result = "DNS Server\n";
+        result += "Ini: " + initial + "/End: " + end;
+        result += "/Gateway: " + ((gateway === null)?"- ":gateway);
+        result += " /DNS 1: " + ((dns1 === null)?"- ":dns1);
+        result += " /DNS 2: " + ((dns2 === null)?"- ":dns2);
+        return result;
+    };
+    
 };

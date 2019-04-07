@@ -240,4 +240,10 @@ var HTTPClient = function(ifacepos)
         lastContent = message.getData().contents;
         updateBrowser();
     };
+    
+    this.getAppDescription = function()
+    {
+        return "";
+    };
+    
 };

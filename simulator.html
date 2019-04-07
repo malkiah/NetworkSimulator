@@ -4,6 +4,8 @@
   <head>
   	<meta charset="utf-8"> 
     <title>Simulator</title>
+    <script type="text/javascript" src="examples/data01.json"></script>
+
     <script type="text/javascript" src="js/Globals.js">
 
 
@@ -152,6 +154,8 @@
 
 function init() 
 {
+	NetworkSimulator.initialdata = exampledata;
+    NetworkSimulator.verbose = true;
     var loader = new ImageLoader(
     ["img/64/switch.png", 
         "img/64/router2.png", 

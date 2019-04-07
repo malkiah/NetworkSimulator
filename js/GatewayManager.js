@@ -194,5 +194,31 @@ var GatewayManager = function(connectable)
         return result;
     };
     
+    this.getGatewayDescription = function()
+    {
+        var result = "";
+        
+        if (defaultgw.gw !== null) 
+        {
+            result += "Dst: " + defaultgw.dst + " / ";
+            result += "Mask: " + defaultgw.mask + " / ";
+            result += "GW: " + defaultgw.gw;
+            result += "\n";
+        }
+        
+        for (var i = 0; i < gateways.length; i++) 
+        {
+            result += "Dst: " + gateways[i].dst + " / ";
+            result += "Mask: " + gateways[i].mask + " / ";
+            result += "GW: " + gateways[i].gw;
+            if (i < gateways.length -1)
+            {
+               result += "\n";
+            }
+        }
+
+        return result;
+    };
+    
     init();
 };

@@ -359,4 +359,8 @@ var DNSServer = function(ifacepos)
     {
         forwarder = fwder;
     };
-};
+    
+    this.getAppDescription = function()
+    {
+        return "DNS Server";
+    };};

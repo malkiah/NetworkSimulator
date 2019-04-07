@@ -99,4 +99,11 @@ var DHCPClient = function(ifacepos)
 
         return data;
     };
+
+        
+    this.getAppDescription = function()
+    {
+        return "";
+    };
+    
 };
